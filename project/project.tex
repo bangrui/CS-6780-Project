@@ -60,7 +60,7 @@
   
 \begin{document} 
 \twocolumn[
-\icmltitle{CS 6780 Research Proposal: Top N Recommender Systems}
+\icmltitle{CS 6780 Research Project: Multi-armed Bandits with Dependent Arms}
 
 % It is OKAY to include author information, even for blind
 % submissions: the style file will automatically remove it for you
@@ -80,28 +80,27 @@
 
 
 \section{Motivation}
-We present a greedy Bayesian approach to solve the contextual bandit problem, and we study how well this method does. We will do numerical experiments and we might be able to prove some performance result.
+We are interested in the multi armed bandits problem with correlated arms. Theoretically this problem can be solved using dynamic programming, however it usually suffers from the curse of dimensionality when the dimension of the arm is high. There are two well known heuristic algorithms for this problem which are Exponential Gradient algorithm and the upper confidence bound algorithm. In this project, we hope to investigate the combination of these two different algorithms.
 
 
 \section{Problem Formulation}
-In this problem, we are given a collection of items (such as movies, books, articles, etc), denote them as $I=\{I_{1},I_{2},\cdots,I_{M}\}$. For each item $I_{n}$, we use a k dimension vector $I_{n}=(i_{1,n},\cdots,i_{k,n})$ to represent its score on k different features. For any time $t=1,2,\cdots,T$, we are asked to pick N items $S_{t}=\{I_{t,1},I_{t,2},\cdots,I_{t,N}\}\subset I$, order them and forward these N items to the user. 
+In this problem, we are given a collection of items (such as movies, books, articles, etc), denote them as $I=\{I_{1},I_{2},\cdots,I_{M}\}$. For each item $I_{n}$, we use a k dimension vector $I_{n}=(i_{1,n},\cdots,i_{k,n})$ to represent its score on k different features. For any time $t=1,2,\cdots,T$, we are asked to pick one item $X_{t}$ and forward it to the user. We further assume the user has a user preference vector $\theta=\{\theta_{1},\cdots,\theta_{k}\}$ which is unknown but remain static over the time. Every time the user sees the item, we will receive a reward $Y_{t}$ which equals to $Y_{t} = \theta \cdot X_{t}+\epsilon$. Here $\epsilon\sim N(0,\lambda^{2})$ is the measurement error with $\lambda$ known. 
 
-We assume there is a known probability vector $(p_{1},\cdots,p_{N})$ associated with the N different positions. Since the top positions are more likely to be seen by the user, we further assume $p_{1}\geq p_{2},\cdots\geq p_{N}$. The user has a user preference vector $\theta=\{\theta_{1},\cdots,\theta_{k}\}$ which is unknown but remain static over the time. Every time the user sees N items, he/she will click the item $I_{t,i}$ with probability $\left(1+\mbox{exp}\left(-p_{i}\theta\cdot I_{t,i}\right)\right)^{-1}$. If the user clicks the item, then we receive a reward 1 and 0 otherwise. Thus, the feedback from the user in this case is a N dimensional vector $(Y_{1,n},\cdots,Y_{N,n})$ and $Y_{i,n}=1$ if the users clicks the item on the $i_{th}$ position and 0 otherwise.  For each $Y_{i,n}$, we know 
+For a fixed time period T, the goal of this problem is to find a strategy $\pi$ to maximize the following expression
 \begin{equation}
-Y_{i,n}|\theta,I_{t,i},p_{i}\sim Bernoulli(\frac{1}{1+\mbox{exp}\left(-p_{i}\theta\cdot I_{t,i}\right)}). \nonumber 
-\end{equation}
-Denote the total reward received at time n as $Y_{n}=\sum_{i=1}^{N}Y_{i,n}$.The goal of this problem is to find a strategy $\pi$ to maximize the following expression
-\begin{equation}
-E^{\pi}\left[\sum_{t=1}^{T} Y_{t}\right]
+E^{\pi}\left[\sum_{t=1}^{T} Y_{t}\right].
 \end{equation}
 
-The questions we are going to solve are the following: 
 
-(1) Suppose there are many historical users in our database and we know their user preference vectors. Then we can calculate the empirical distribution for those user preference vectors and treat it as the prior distribution of the current $\theta$. Every time we observe the user's feedback $(Y_{1,n},\cdots,Y_{N,n})$, we can use this feedback and maximum likelihood method to find a new estimate for $\theta$, denote as $\hat{\theta}_{n}$. Then we make our next selection based on this $\hat{\theta}_{n}$. How good is this greedy method compared to other existing methods? 
+\section{Heuristic Algorithms}
+There are two well known algorithms for this problem, which are Exponential Gradient algorithm and the upper confidence bound algorithm.
 
-(2) Further, when we make the selection based on $\hat{\theta}_{n}$, what's the best trade off between exploitation and exploration?
 
-(3) When k is large, this problem is computational intractable. How could we solve this problem efficiently? Can we prove any structural results for this problem?
+\section{Numerical Experiment}
+In this simulation, we use the yelp academic dataset. The goal of this simulation is to find the favorite restaurant categories for a new user. There are 4596 restaurants in the dataset and each restaurant belongs to one or multiple categories. We first find the top twenty categories that has most restaurants, which are Pizza, Sandwiches, Food etc, and use those 20 categories as our feature. For each restaurant, if it belongs to certain category, then the corresponding element of its feature vector is 1 and 0 otherwise. So the feature vector of each restaurant is a 20 dimensional binary vector. 
+
+For each user, we calculated his user preference vector based on his rating and the restaurants' feature vectors that he rated using ridge regression (since there are not too many ratings, ordinary linear regression doesn't work here due to singularity). Then we calculated the sample mean and the sample variance of all users' preference vector and denote them as $(\mu,\Sigma)$. We further assume that for each user's preference vector $\theta\sim N(\mu,\Sigma)$ and generate new user from this distribution.
+
 
 
 \section{Possible Applications}
@@ -109,18 +108,6 @@ The questions we are going to solve are the following:
 Recommender systems want to find the preference that a user would give to a subset of a finite set of items. They're widely applied to different problems. For example, they're used in Netflix where there are thousands of movies and TV episodes. The biggest challenge of these problems is that there are millions of objets and hundreds of million of users, and so it's necessary to find a model that performs well and be sufficiently fast.
 
 
-\section{Approach and Recourses}
-We will develop our method and test the performance on the dataset provided by companies like Yelp or Netflix.
-
-
-\section{Schedule}
-
- March 1: Test the performance of greedy method.\\
- March 23: Trade off between expatiation and exploration.\\
- April 20: Improve the efficiency for large data.\\
- May 11: Finish the report.
- 
- 
 \begin{thebibliography}[1]
 X Zhao, P Frazier, \emph{Exploration vs. Exploitation in the Information Filtering Problem}
 \end{thebibliography}
