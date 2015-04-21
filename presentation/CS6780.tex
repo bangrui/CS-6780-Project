@@ -1,0 +1,250 @@
+\documentclass[serif]{beamer}
+
+%set the theme to Cornell and set options.
+%navbar=true shows the navigation bar in the footline. navbar=false hides it
+%colorblocks=true makes the block (and theorem) environment appear as a colored box. colorblocks=false makes the block (and theorem) environment very plain.
+\mode<presentation>
+{
+\usetheme
+[navbar=true,colorblocks=true,pagenumbers=true]{Cornell}
+}
+
+%these packages are essential for compiling
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{mathrsfs}
+\usepackage{biblatex}
+
+%short title appears in headline, long title appears on title page, subtitle appears on title page
+\title[Correlated Multi-armed Bandits]{Correlated Multi-armed Bandits}
+\subtitle{CS 6780 Advanced Machine Learning}
+
+%the author only appears in the headline of slides
+\author[]{CS 6780 Project}
+
+%the institute contains all information, including author name. only appears on title page
+\institute
+{
+\begin{tabular}[h]{c}
+ Zhengdi Shen  \\
+Bangrui Chen\\
+Saul Toscano Palmerin\ 
+\end{tabular}
+}
+
+\date[]{April 24, 2015}
+
+%uncomment the following lines to change major colors in the theme. they are currently set to their defaults.
+
+%\setbeamercolor*{structure}{fg=cblue} %misc. elements, like toc pages and itemize
+%\setbeamercolor{palette secondary}{fg=cred} %footline
+%\setbeamercolor{palette tertiary}{fg=white,bg=cgray} %headline
+%\setbeamercolor{palette quaternary}{fg=cred} %title
+%\setbeamercolor{high stripe}{bg=cred} %stripe in title
+%\definecolor{block color}{named}{cblue} %normal block colors
+
+
+\begin{document}
+
+%#################################################
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+%#################################################
+
+\section{Motivation}
+
+\tableofcontents[currentsection,subsectionstyle=hide]
+
+\subsection*{}
+
+
+%#################################################
+\begin{frame}{Bandits }
+\begin{itemize}
+\item<1-> Pull arms sequentially so as to maximize the total expected reward, e.g, gambler faces at a row of slot machines. Robbins in 1952, realizing the importance of the problem.
+\item<2-> The crucial tradeoff the gambler faces at each trial is between "exploitation" of the machine that has the highest expected payoff and "exploration" to get more information about he expected payoffs of the other machines.
+\end{itemize}
+\end{frame}
+%#################################################
+
+%#################################################
+\begin{frame}{Independent Arms}
+\begin{itemize}
+\item <1->Rewards for each arm are generally assumed to be independent of each other.
+\item<2-> A theorem, the Gittins Index published first by John C. Gittins gives an optimal policy in the Markov setting for maximizing the expected discounted reward.
+\item<3-> This assumption enables us to consider each arm separately, but Lai and Robbins proved the regret under an arbitrary policy increases linearly with number of arms. Most policies that assume independence require each arm to be tried at least once, and are impractical in settings involving many arms.
+\end{itemize}
+\end{frame}
+%#################################################
+
+%#################################################
+\begin{frame}{Dependent Arms}
+\begin{itemize}
+\item <1-> What if they are dependent? E.g., ads on similar topics, using similar text/phrases, should have similar rewards.
+\item <2-> In such a setting, the information obtained from puling one arm can change our understanding of other arms. Here, we want a policy whose regret is independent of the number of arms. 
+\end{itemize}
+\end{frame}
+%#################################################
+
+%#################################################
+\begin{frame}{Linearly Parameterized Bandits}
+\begin{itemize}
+\item <1-> Mersereau proposed a simple model that the reward of each arm depends on a single random variable z, with a known prior distribution. 
+\item <2-> Since the reward of each arm depends on a single random variable, the mean rewards are perfectly correlated.
+\item <3-> Under certain assumptions, the cumulative Bayes risk over T periods under a greedy policy admits an $O(\log(T))$ upper bound, independent of the number of arms.
+\item <4-> In this project, we are going to consider a model that the reward of each arm depends linearly on a multivariate random variable, with a known prior distribution.
+\end{itemize}
+\end{frame}
+%#################################################
+
+\begin{frame}{A More Practical Motivation}
+For a newly registered user on Yelp, how should yelp select the forwarding restaurants at each time so that it can maximize the expected average rating of this new user?
+\end{frame}
+
+
+
+
+%#################################################
+
+\section{Problem Setting}
+
+\tableofcontents[currentsection,subsectionstyle=hide]
+
+\subsection*{}
+
+%#################################################
+\begin{frame}{Problem Setting}
+\begin{itemize}
+\item<1-> We represent each restaurant with a 20 dimensional binary vector, and the 20 features are Pizza, Sandwiches, Food, Nightlife, American(new), Bars, American(traditional), Mexican, Chinese, Italian, Japanese, Fast Food, Burgers, Breakfast and Brunch, Coffee and Tea, Delis, Indian, Thai, Sushi Bars, Mediterranean and Asian Fusion. Denote the set of arms as $U^{20}$.
+\item<2-> We assume each user has a user preference vector $\theta$ corresponding to the 20 different features listed above, with $\theta\sim N(\mu,\Sigma)$ with $\mu$ and $\Sigma$ known (This can be calculated from the historical data).
+\end{itemize}
+\end{frame}
+%#################################################
+\begin{frame}{Problem Setting}
+\begin{itemize}
+\item<1-> $Y_{t}$: the reward of playing arm $\textbf{u}\in U^{20}$ in period t, which is given by
+\begin{equation}
+Y_{t}=\textbf{u}^{'}\theta+W_{t} \nonumber 
+\end{equation}
+where $\textbf{u}^{'}\theta$ is the inner product between the vector $\textbf{u}\in R^{20}$ and the random vector $\textbf{Z}\in \mathbb{R}^{20}$. $\{W_{t}:t\geq 1\}$ is i.i.d distributed with $N(0,\sigma^{2})$.
+\item<2-> $\mathscr{H}_{t}$: the set of possible histroies until the end of period t.
+\end{itemize}
+
+\end{frame}
+
+
+
+
+%#################################################
+\begin{frame}{The Model}
+\begin{itemize}
+\item<1-> $\psi=(\psi_{1},\psi_{2},\cdots)$: Policy $\psi$ is a sequence of functions such that $\psi_{t}:\mathscr{H}_{t-1}\rightarrow \mathbb{U}_{20}$ selects an arm in period t based on the history until the end of period t-1.
+\item<2-> For any policy $\psi$ and $\textbf{z}\in \mathbb{R}^{20}$, the T-period cumulative regret under $\psi$ given $\theta=\theta_{0}$, denoted by $Regret(\theta_{0},T,\psi)$, is defined by
+\begin{equation}
+Regret(\theta_{0},T,\psi)=\sum_{t=1}^{T}E\left[\max_{\textbf{v}\in \mathbb{U}_{20}}\textbf{v}^{'}\theta_{0}-\textbf{U}_{t}^{'}\theta_{0}|\theta=\theta_{0}\right] \nonumber
+\end{equation}
+where for any $t\geq 1$, $\textbf{U}_{t}\in \mathbb{U}_{r}$ is the arm chosen under $\psi$ in period t.
+
+
+\end{itemize}
+\end{frame}
+
+
+%#################################################
+
+
+\begin{frame}{Our Goal}
+\begin{itemize}
+\item<1-> Find an heuristic maximize the new user's rating.
+\item<2-> Prove the regret bound of our heuristic algorithm.
+\end{itemize}
+\end{frame}
+
+
+%#################################################
+\section{Approach}
+\tableofcontents[currentsection,subsectionstyle=hide]
+
+
+
+
+%#################################################
+
+\begin{frame}{"Optimal" Algorithm}
+\begin{block}{Lower bound for regret}
+For an arbitrary policy, the regret is at least $\Omega(r\sqrt{T})$ under some regularity conditions, where the set of arms is compact in $R^{r}$.
+\end{block}
+
+\begin{block}{Regret for PEPE algorithm}
+The Phased Exploration and Greedy Exploitation algorithm has regret $\Omega(r\sqrt{T})$ under some regularity conditions.
+\end{block}
+
+
+\textbf{Question}: Is the PEPE algorithm really optimal? The big O notation might hide a large constant!
+\end{frame}
+
+
+%#################################################
+\begin{frame}{PEGE}
+
+\begin{block}{Phased Exploration and Greedy Exploitation}
+\textbf{Description:} For each cycle $c\geq 1$, complete the following two phases.
+\begin{itemize}
+\item (1) \textbf{Exploration (r periods):} For $k=1,2,\cdots,r$, play arm $\textbf{b}_{k}\in \mathbb{U}_{r}$ given in Assumption 1(b), and observe the reward $X^{b_{k}}(c)$. Compute the OLS estimate $\hat{\textbf{Z}}(c)\in \mathbb{R}^{r}$, given by
+\begin{align}
+\hat{\textbf{Z}}(c)&=\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}X^{b_{k}}(s) \nonumber \\
+&=\textbf{Z}+\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}W^{b_{k}}(s) \nonumber 
+\end{align}
+where for any k, $X^{b_{k}}(s)$, and $W^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle s.
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+%#################################################
+
+
+%#################################################
+\begin{frame}{PEGE}
+
+\begin{block}{Phased Exploration and Greedy Exploitation}
+\begin{itemize}
+\item \textbf{Exploitation (c periods)}: Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathbb{U}^{r}}\textbf{v}^{'}\hat{\textbf{Z}}(c)$ for c periods.
+\end{itemize}
+\end{block}
+
+
+\end{frame}
+%#################################################
+\begin{frame}{UCB}
+\begin{block}{Upper Confidence Bound}
+\begin{itemize}
+\item s
+\item s
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+
+
+
+%#################################################
+
+
+
+
+\begin{frame}{Question?}
+\begin{center}
+\Huge{Thanks for your time!}
+\end{center}
+\end{frame}
+%#################################################
+
+
+
+
+\end{document}
+
