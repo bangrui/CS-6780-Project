@@ -20,6 +20,7 @@
 % For algorithms
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage{amsmath}
 
 % As of 2011, we use the hyperref package to produce hyperlinks in the
 % resulting PDF.  If this breaks your system, please commend out the
@@ -93,7 +94,46 @@ E^{\pi}\left[\sum_{t=1}^{T} Y_{t}\right].
 
 
 \section{Heuristic Algorithms}
-There are two well known algorithms for this problem, which are Exponential Gradient algorithm and the upper confidence bound algorithm.
+There are two well known algorithms for this problem, which are Exponential Gradient algorithm and the upper confidence bound algorithm.\
+
+\textbf{Notations: }
+
+\begin{center}
+\begin{tabular}{ll}
+${x}_i$: & feature of the recommended restaurant at step $i$, binary vector\\
+$y_i$: & rate given by the user at step $i$, range is $(0,5)$\\
+${\theta}$: & user's preference\\
+${\mu_0}$: & prior knowledge of ${E}[{\theta}]$ \\
+$\Sigma_0$: & prior knowledge of Cov$(\theta)$
+\end{tabular}
+\end{center}
+
+At each step, we assume the user's rating $y_i = \theta\cdot {x}_i+\epsilon$, where $\epsilon\sim\mathcal{N}(0,\sigma^2)$.
+
+\subsection{Upper Confidence Bound}
+At step $t+1$, we have knowledge $\mu_0,\ \Sigma_0,\ ({x}_1, y_1), \cdots, ({x}_{t}, y_t)$. The distribution 
+\[\theta | [ \mu_0,\ \Sigma_0,\ ({x}_1, y_1), \cdots, ({x}_{t}, y_t) ] \sim \mathcal{N}(\mu_{t}, \Sigma_{t}) \]
+where 
+\begin{align}
+\Sigma_{t}^{-1} = & \Sigma_0^{-1}+\frac{1}{\sigma^2}X_t^TX_t &=& \Sigma_t^{-1} + \frac{1}{\sigma^2}{x}_t{x}_t^T\\
+\mu_t = & \Sigma_t\left( \Sigma_0^{-1}\mu_0 + \frac{1}{\sigma^2}X_t^Ty \right) &= &\Sigma_t\left(\Sigma_{t-1}\mu_{t-1}+\frac{1}{\sigma^2}{x}_t y_t\right)
+\end{align}
+where 
+\begin{align*}
+X_t = \left(
+\begin{array}{c}
+{x}_1^T\\
+\vdots\\
+{x}_t^T
+\end{array}\right)
+\end{align*}
+
+Then, for each restaurant $r$, we suppose its feature vector is ${x}^{(r)}$. And its expected rating and variance are
+\[E[{x}^{(r)}\cdot \theta] = {x}^{(r)}\cdot \mu_t,\quad Var({x}^{(r)}\cdot \theta) =({x}^{(r)})^T\Sigma_t {x}^{(r)} \]
+The restaurant we will recommend at step $t+1$ is
+\[r_t = \arg\max_r E[{x}^{(r)}\cdot \theta] + 1.96 \sqrt{Var({x}^{(r)}\cdot \theta)}\]
+
+
 
 
 \section{Numerical Experiment}
