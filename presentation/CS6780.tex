@@ -117,21 +117,21 @@ For a newly registered user on Yelp, how should yelp select the forwarding resta
 %#################################################
 \begin{frame}{Problem Setting}
 \begin{itemize}
-\item<1-> We represent each restaurant with a 20 dimensional binary vector, and the 20 features are Pizza, Sandwiches, Food, Nightlife, American(new), Bars, American(traditional), Mexican, Chinese, Italian, Japanese, Fast Food, Burgers, Breakfast and Brunch, Coffee and Tea, Delis, Indian, Thai, Sushi Bars, Mediterranean and Asian Fusion. Denote the set of arms as $U^{20}$.
-\item<2-> We assume each user has a user preference vector $\theta$ corresponding to the 20 different features listed above, with $\theta\sim N(\mu,\Sigma)$ with $\mu$ and $\Sigma$ known (This can be calculated from the historical data).
+\item<1-> We represent each restaurant with a 20 dimensional binary vector X, and the 20 features are Pizza, Sandwiches, Food, Nightlife, American(new), Bars, American(traditional), Mexican, Chinese, Italian, Japanese, Fast Food, Burgers, Breakfast and Brunch, Coffee and Tea, Delis, Indian, Thai, Sushi Bars, Mediterranean and Asian Fusion. Denote the set of arms as $U^{20}$.
+\item<2-> We assume each user has a user preference vector $\theta$ corresponding to the 20 different features listed above, with $\theta\sim N(\mu_{0},\Sigma_{0})$ with $\mu_{0}$ and $\Sigma_{0}$ known (This can be calculated from the historical data).
 \end{itemize}
 \end{frame}
 %#################################################
 \begin{frame}{Problem Setting}
 \begin{itemize}
-\item<1-> $Y_{t}$: the reward of playing arm $\textbf{u}\in U^{20}$ in period t, which is given by
+\item<1-> $Y_{t}$: the reward of playing arm $X\in U^{20}$ in period t, which is given by
 \begin{equation}
-Y_{t}=\textbf{u}^{'}\theta+W_{t} \nonumber 
+Y_{t}=X\cdot \theta+W_{t} \nonumber 
 \end{equation}
-where $\textbf{u}^{'}\theta$ is the inner product between the vector $\textbf{u}\in R^{20}$ and the random vector $\textbf{Z}\in \mathbb{R}^{20}$. $\{W_{t}:t\geq 1\}$ is i.i.d distributed with $N(0,\sigma^{2})$.
+where the measurement error term $\{W_{t}:t\geq 1\}$ is i.i.d distributed with $N(0,\sigma^{2})$.
 \item<2-> $\mathscr{H}_{t}$: the set of possible histroies until the end of period t.
+\item Denote the posterior distribution after t observations as $\mu_{t}$ and $\Sigma_{t}$ respectively.
 \end{itemize}
-
 \end{frame}
 
 
@@ -140,30 +140,18 @@ where $\textbf{u}^{'}\theta$ is the inner product between the vector $\textbf{u}
 %#################################################
 \begin{frame}{The Model}
 \begin{itemize}
-\item<1-> $\psi=(\psi_{1},\psi_{2},\cdots)$: Policy $\psi$ is a sequence of functions such that $\psi_{t}:\mathscr{H}_{t-1}\rightarrow \mathbb{U}_{20}$ selects an arm in period t based on the history until the end of period t-1.
-\item<2-> For any policy $\psi$ and $\textbf{z}\in \mathbb{R}^{20}$, the T-period cumulative regret under $\psi$ given $\theta=\theta_{0}$, denoted by $Regret(\theta_{0},T,\psi)$, is defined by
+\item<1-> $\psi=(\psi_{1},\psi_{2},\cdots)$: Policy $\psi$ is a sequence of functions such that $\psi_{t}:\mathscr{H}_{t-1}\rightarrow \mathbb{U}^{20}$ selects an arm in period t based on the history until the end of period t-1.
+\item<2-> For any policy $\psi$ and $\theta_{0}\in \mathbb{R}^{20}$, the T-period cumulative regret under $\psi$ given $\theta=\theta_{0}$, denoted by $Regret(\theta_{0},T,\psi)$, is defined by
 \begin{equation}
-Regret(\theta_{0},T,\psi)=\sum_{t=1}^{T}E\left[\max_{\textbf{v}\in \mathbb{U}_{20}}\textbf{v}^{'}\theta_{0}-\textbf{U}_{t}^{'}\theta_{0}|\theta=\theta_{0}\right] \nonumber
+Regret(\theta_{0},T,\psi)=\sum_{t=1}^{T}E\left[\max_{X\in \mathbb{U}^{20}}X\cdot\theta_{0}-X_{t}\cdot\theta_{0}|\theta=\theta_{0}\right] \nonumber
 \end{equation}
-where for any $t\geq 1$, $\textbf{U}_{t}\in \mathbb{U}_{r}$ is the arm chosen under $\psi$ in period t.
+where for any $t\geq 1$, $X_{t}\in \mathbb{U}^{20}$ is the arm chosen under $\psi$ in period t.
 
 
 \end{itemize}
 \end{frame}
 
 
-%#################################################
-
-
-\begin{frame}{Our Goal}
-\begin{itemize}
-\item<1-> Find an heuristic maximize the new user's rating.
-\item<2-> Prove the regret bound of our heuristic algorithm.
-\end{itemize}
-\end{frame}
-
-
-%#################################################
 \section{Approach}
 \tableofcontents[currentsection,subsectionstyle=hide]
 
@@ -220,9 +208,10 @@ where for any k, $X^{b_{k}}(s)$, and $W^{b_{k}(s)}$ denote the observed reward a
 %#################################################
 \begin{frame}{UCB}
 \begin{block}{Upper Confidence Bound}
+Given $\theta \sim N(\mu_{0},\Sigma_{0})$, for t from 1 to T:
 \begin{itemize}
-\item s
-\item s
+\item Play arm $i_{t}=\arg\max\{\mu_{t-1}\cdot X_{i} + 1.96X_{i}^{'}\Sigma_{t-1} X_{i}\}$
+\item Calculate $\mu_{t}$ and $\Sigma_{t}$ based on arm $Y_{t}$, reward $X_{i_{t}}$ and $\mu_{t-1}$ and $\Sigma_{t-1}$.
 \end{itemize}
 
 \end{block}
@@ -232,7 +221,17 @@ where for any k, $X^{b_{k}}(s)$, and $W^{b_{k}(s)}$ denote the observed reward a
 
 
 %#################################################
+%#################################################
+\begin{frame}{Our Algorithm}
+\begin{block}{Our Algorithm}
+Replace the phase exploitation part with upper confidence bound.
 
+\end{block}
+
+\end{frame}
+
+
+%#################################################
 
 
 

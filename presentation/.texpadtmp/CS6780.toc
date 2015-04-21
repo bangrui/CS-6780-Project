@@ -8,4 +8,4 @@
 \defcounter {refsection}{0}\relax 
 \beamer@sectionintoc {2}{Problem Setting}{15}{0}{2}
 \defcounter {refsection}{0}\relax 
-\beamer@sectionintoc {3}{Approach}{24}{0}{3}
+\beamer@sectionintoc {3}{Approach}{22}{0}{3}
