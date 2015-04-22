@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.1.26)  21 APR 2015 17:37
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.1.26)  21 APR 2015 21:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1300,8 +1300,6 @@ Overfull \vbox (19.15175pt too high) detected at line 193
 
 ] [27
 
-] [28
-
 ]
 \tf@nav=\write7
 \openout7 = `CS6780.nav'.
@@ -1312,13 +1310,13 @@ Overfull \vbox (19.15175pt too high) detected at line 193
 \tf@snm=\write9
 \openout9 = `CS6780.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 248.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 248.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 237.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 237.
 
 (/Users/apple/Desktop/Cornell/2015 Spring/CS 6780/CS-6780-Project/presentation/
 .texpadtmp/CS6780.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 248.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 248.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 237.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 237.
 Package rerunfilecheck Info: File `CS6780.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
@@ -1328,13 +1326,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Package logreq Info: Writing requests to 'CS6780.run.xml'.
 \openout1 = `CS6780.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 248.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 237.
  ) 
 Here is how much of TeX's memory you used:
- 21280 strings out of 493315
- 391724 string characters out of 6137904
+ 21276 strings out of 493315
+ 391689 string characters out of 6137904
  800299 words of memory out of 5000000
- 24179 multiletter control sequences out of 15000+600000
+ 24177 multiletter control sequences out of 15000+600000
  77699 words of font info for 59 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  49i,21n,66p,912b,1913s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1360,10 +1358,10 @@ lmsy8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/symbo
 ls/msbm10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/rsfs/rsfs1
 0.pfb>
 Output written on "/Users/apple/Desktop/Cornell/2015 Spring/CS 6780/CS-6780-Pro
-ject/presentation/.texpadtmp/CS6780.pdf" (28 pages, 343762 bytes).
+ject/presentation/.texpadtmp/CS6780.pdf" (27 pages, 339256 bytes).
 PDF statistics:
- 647 PDF objects out of 1000 (max. 8388607)
- 563 compressed objects within 6 object streams
- 61 named destinations out of 1000 (max. 500000)
+ 629 PDF objects out of 1000 (max. 8388607)
+ 546 compressed objects within 6 object streams
+ 59 named destinations out of 1000 (max. 500000)
  96 words of extra memory for PDF output out of 10000 (max. 10000000)
 

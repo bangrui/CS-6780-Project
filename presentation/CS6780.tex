@@ -180,12 +180,12 @@ The Phased Exploration and Greedy Exploitation algorithm has regret $\Omega(r\sq
 \begin{block}{Phased Exploration and Greedy Exploitation}
 \textbf{Description:} For each cycle $c\geq 1$, complete the following two phases.
 \begin{itemize}
-\item (1) \textbf{Exploration (r periods):} For $k=1,2,\cdots,r$, play arm $\textbf{b}_{k}\in \mathbb{U}_{r}$ given in Assumption 1(b), and observe the reward $X^{b_{k}}(c)$. Compute the OLS estimate $\hat{\textbf{Z}}(c)\in \mathbb{R}^{r}$, given by
+\item (1) \textbf{Exploration (r periods):} For $k=1,2,\cdots,r$, play arm $\textbf{b}_{k}\in \mathbb{U}_{r}$ given in Assumption 1(b), and observe the reward $Y^{b_{k}}(c)$. Compute the OLS estimate $\hat{\theta}(c)\in \mathbb{R}^{r}$, given by
 \begin{align}
-\hat{\textbf{Z}}(c)&=\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}X^{b_{k}}(s) \nonumber \\
-&=\textbf{Z}+\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}W^{b_{k}}(s) \nonumber 
+\hat{\theta}(c)&=\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}Y^{b_{k}}(s) \nonumber \\
+&=\theta+\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}W^{b_{k}}(s) \nonumber 
 \end{align}
-where for any k, $X^{b_{k}}(s)$, and $W^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle s.
+where for any k, $Y^{b_{k}}(s)$, and $W^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle s.
 \end{itemize}
 
 \end{block}
@@ -199,7 +199,7 @@ where for any k, $X^{b_{k}}(s)$, and $W^{b_{k}(s)}$ denote the observed reward a
 
 \begin{block}{Phased Exploration and Greedy Exploitation}
 \begin{itemize}
-\item \textbf{Exploitation (c periods)}: Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathbb{U}^{r}}\textbf{v}^{'}\hat{\textbf{Z}}(c)$ for c periods.
+\item \textbf{Exploitation (c periods)}: Play the greedy arm $\textbf{G}(c)=\arg \max_{X\in \mathbb{U}^{r}}X\cdot\hat{\theta}(c)$ for c periods.
 \end{itemize}
 \end{block}
 
@@ -210,7 +210,7 @@ where for any k, $X^{b_{k}}(s)$, and $W^{b_{k}(s)}$ denote the observed reward a
 \begin{block}{Upper Confidence Bound}
 Given $\theta \sim N(\mu_{0},\Sigma_{0})$, for t from 1 to T:
 \begin{itemize}
-\item Play arm $i_{t}=\arg\max\{\mu_{t-1}\cdot X_{i} + 1.96X_{i}^{'}\Sigma_{t-1} X_{i}\}$
+\item Play arm $X_{i_{t}}=\arg\max\{\mu_{t-1}\cdot X_{i} + 1.96X_{i}^{'}\Sigma_{t-1} X_{i}\}$
 \item Calculate $\mu_{t}$ and $\Sigma_{t}$ based on arm $Y_{t}$, reward $X_{i_{t}}$ and $\mu_{t-1}$ and $\Sigma_{t-1}$.
 \end{itemize}
 
@@ -218,17 +218,6 @@ Given $\theta \sim N(\mu_{0},\Sigma_{0})$, for t from 1 to T:
 
 \end{frame}
 
-
-
-%#################################################
-%#################################################
-\begin{frame}{Our Algorithm}
-\begin{block}{Our Algorithm}
-Replace the phase exploitation part with upper confidence bound.
-
-\end{block}
-
-\end{frame}
 
 
 %#################################################
