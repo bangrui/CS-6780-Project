@@ -24,8 +24,8 @@ exp_arm = feature[[1,2,5,8,9,11,13,14,15,16,17,19,20,24,26,27,29,31,42,45]]
 
 
 simu_result = []
-repli_times = 100
-time_period = 610 
+repli_times = 10
+time_period = 2275 
 sigma = 0.8
 
 count = 0
@@ -39,8 +39,10 @@ reminder = time_period - (count * 20 + count * (count + 1) / 2)
 
 np.random.seed(1)
 user_pref = np.random.multivariate_normal(norm_mean,norm_cov,repli_times)
+theta_old = np.zeros(dim)
 
 for j in range(repli_times):
+  cycle = 0
   result = 0
   reward = []
   arm_forward = []
@@ -48,6 +50,7 @@ for j in range(repli_times):
   arm_id = -1
   for i in range(count):
   ## Exploration period
+    cycle = cycle + 1
     for k in range(dim):
       arm_forward.append(exp_arm[k])
       temp = np.dot(user_pref[j],exp_arm[k]) + np.random.normal(0,sigma)
@@ -55,14 +58,27 @@ for j in range(repli_times):
       result = result + temp
   ## Exploitation period
     theta = np.asarray(np.linalg.lstsq(arm_forward,reward)[0])
-    temp_reward = [np.dot(feature[t],theta) for t in range(len(feature))]
-    arm_id = temp_reward.index(max(temp_reward))
+    if np.linalg.norm(theta-theta_old,2) < 0.8:
+      reminder = time_period - (cycle * 20 + cycle * (cycle - 1) / 2)
+      break
+    theta_old = copy.copy(theta)
     period = period + 1
     for t in range(period):
+      theta = np.asarray(np.linalg.lstsq(arm_forward,reward)[0])
+      temp_reward = [np.dot(feature[t],theta) for t in range(len(feature))]
+      arm_id = temp_reward.index(max(temp_reward))
+      arm_forward.append(feature[arm_id])
       temp = np.dot(user_pref[j],feature[arm_id]) + np.random.normal(0,sigma)
+      reward.append(temp)
       result = result + temp 
+  print reminder
   for i in range(reminder):
+    theta = np.asarray(np.linalg.lstsq(arm_forward,reward)[0])
+    temp_reward = [np.dot(feature[t],theta) for t in range(len(feature))]
+    arm_id = temp_reward.index(max(temp_reward))
     temp = np.dot(user_pref[j],feature[arm_id]) + np.random.normal(0,sigma)
+    arm_forward.append(feature[arm_id])
+    reward.append(temp)
     result = result + temp 
   simu_result.append(result)
 
