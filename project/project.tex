@@ -21,6 +21,7 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 
 % As of 2011, we use the hyperref package to produce hyperlinks in the
 % resulting PDF.  If this breaks your system, please commend out the
@@ -85,12 +86,41 @@ We are interested in the multi armed bandits problem with correlated arms. Theor
 
 
 \section{Problem Formulation}
-In this problem, we are given a collection of items (such as movies, books, articles, etc), denote them as $I=\{I_{1},I_{2},\cdots,I_{M}\}$. For each item $I_{n}$, we use a k dimension vector $I_{n}=(i_{1,n},\cdots,i_{k,n})$ to represent its score on k different features. For any time $t=1,2,\cdots,T$, we are asked to pick one item $X_{t}$ and forward it to the user. We further assume the user has a user preference vector $\theta=\{\theta_{1},\cdots,\theta_{k}\}$ which is unknown but remain static over the time. Every time the user sees the item, we will receive a reward $Y_{t}$ which equals to $Y_{t} = \theta \cdot X_{t}+\epsilon$. Here $\epsilon\sim N(0,\lambda^{2})$ is the measurement error with $\lambda$ known. 
+We have a finite set $\mathcal{U}_{r}=\{\bold{u}_{1},\cdots,\bold{u}_{m}\}\subset \mathbb{R}^{r}$ that corresponds to the set of arms, where $r\geq 2$. For any time $t=1,2,\cdots,T$, we are asked to pick one arm $X_{t}$. The reward $Y_{t}$ of playing arm $X_{t}\in \mathcal{U}_{r}$ in period t is given by
+\begin{equation}
+Y_{t} = \theta \cdot X_{t} + \epsilon_{t}, \nonumber
+\end{equation}
+where $\epsilon_{t}\sim N(0,\sigma^{2})$ is the measurement error with $\sigma$ known. Here $\theta$ is an unknown random vector, which is drawn from a multivariate normal distribution with mean $\mu$ and variance $\Sigma$. We further assume $\mu$ and $\Sigma$ are known.
 
 For a fixed time period T, the goal of this problem is to find a strategy $\pi$ to maximize the following expression
 \begin{equation}
 E^{\pi}\left[\sum_{t=1}^{T} Y_{t}\right].
 \end{equation}
+Or equivalently, we are trying to find a policy that can minimize the Bayes risk under $\pi$:
+\begin{equation}
+\text{Risk}(T,\pi) = E\left[\text{Regret}(\theta,T,\pi)\right],
+\end{equation}
+
+where the cumulative regret is defined as the following:
+\begin{equation}
+\text{Regret}(\theta_{0},T,\pi)=\sum_{t=1}^{T}E\left[\max_{X\in \mathcal{U}_{r}}X\cdot\theta_{0}-X_{t}\cdot \theta_{0}|\theta=\theta_{0}\right].
+\end{equation}
+
+
+
+
+
+\section{PEGE}
+
+PEGE algorithm
+\begin{algorithm}
+\caption{Phased Exploration and Greedy Exploitation}
+\textbf{Description}: For each cycle $c\geq 1$, complete the following two phases:
+\begin{itemize}
+\item [1. ] \textbf{Exploration (r periods)} For $k=1,2,\cdots,r$, play arm 
+\item [2. ] \textbf{Exploitation (c periods)}
+\end{itemize}
+\end{algorithm}
 
 
 \section{Heuristic Algorithms}
@@ -146,6 +176,8 @@ For each user, we calculated his user preference vector based on his rating and 
 \section{Possible Applications}
 
 Recommender systems want to find the preference that a user would give to a subset of a finite set of items. They're widely applied to different problems. For example, they're used in Netflix where there are thousands of movies and TV episodes. The biggest challenge of these problems is that there are millions of objets and hundreds of million of users, and so it's necessary to find a model that performs well and be sufficiently fast.
+
+
 
 
 \begin{thebibliography}[1]
