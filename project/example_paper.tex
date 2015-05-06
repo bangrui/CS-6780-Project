@@ -1,0 +1,629 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2012 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2012,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\usepackage{amsmath}               
+  {
+      \theoremstyle{plain}
+      \newtheorem{assumption}{Assumption}
+      \theoremstyle{definition}
+      \newtheorem{modification}{Moditication}
+  }
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2012} with
+% \usepackage[nohyperref]{icml2012} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+\usepackage[accepted]{icml2012} 
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Appearing in''
+% \usepackage[accepted]{icml2012}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Submission and Formatting Instructions for ICML 2012}
+
+\begin{document} 
+\twocolumn[
+\icmltitle{CS 6780 Research Project: Multi-armed Bandits with Dependent Arms}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2015
+% package.
+\icmlauthor{Bangrui Chen}{bc496@cornell.edu}
+\icmlauthor{Saul Toscano Palmerin}{st684@cornell.edu}
+\icmlauthor{Zhengdi Shen}{zs267@cornell.edu}
+
+% You may provide any keywords that you 
+% find helpful for describing your paper; these are used to populate 
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{boring formatting information, machine learning, ICML}
+
+\vskip 0.3in
+]
+
+
+\section{Introduction}
+
+Exploration vs Exploitation has been studied extensively under the framework of multi-armed bandits problem. The multi-armed bandits problem was first studied by Robbins ?? in 1952, which studied the optimal policy to pull arms sequentially so as to maximize the total expected reward. For the case each arm is independent, the Gittins Index ?? provides an optimal policy for maximizing the expected case. Further, Lai and Robbins proved the regret under an arbitrary policy increases linearly with number of arms. Most policies that assume independence require each arm to be tried at least once, and are impractical in settings involving many arms. 
+
+Since then, a lot of research has been focused on the dependent case. In ??and ??, they studied the multi-bandit problem with side information. In ??, ??, people consider the reward for each bandit is the inner product between an single unknown parameter and the bandit. In ??, they modeled the expected reward of each arm linearly depends on a multivariate random variable. Furthermore in that paper, they showed that under arbitrary policy, the Bayes regret is $O(r\sqrt{T})$ where r is the dimensional of the multivariate random variable. They also provided an simple algorithm that reaches the $O(r\sqrt{T})$ regret bound.
+
+Through PEGE has the optimal regret bound, it doesn't do well in practice. In this project, we modified the PEGE algorithm and proved the modified algorithms are still optimal in the sense their Bayes regret is still $O(r\sqrt{T})$. We perform numerical experiments using the Yelp academic data to compare our modified algorithms as well as the original PEGE algorithm. The results suggest our modified algorithm are much better. Further, we compare our modified algorithms with UCB and Exponential Gradient algorithm. 
+
+There are lots of application for this problem. For instance, a newly registered user for a website with no background information will typically face a cold start problem. Same thing would happen to a investment company who wants to invest money into emerging industries. Furthermore, this problem is closely related to the recommender systems, which are a subclass of information filtering system that seek to predict the ``rating" or ``preference" that user would give to an item. In these applications, one natural question would be how can we quickly learn user's preference from their feedback?
+
+
+
+
+
+\section{Problem Formulation}
+We have a finite set $\mathcal{U}_{r}=\{\bold{u}_{1},\cdots,\bold{u}_{m}\}\subset \mathbb{R}^{r}$ that corresponds to the set of arms, where $r\geq 2$. For any time $t=1,2,\cdots,T$, we are asked to pick one arm $X_{t}$. The reward $Y_{t}$ of playing arm $X_{t}\in \mathcal{U}_{r}$ in period t is given by
+\begin{equation}
+Y_{t} = \theta \cdot X_{t} + \epsilon_{t}, \nonumber
+\end{equation}
+where $\epsilon_{t}\sim N(0,\sigma^{2})$ is the measurement error with $\sigma$ known. Here $\theta$ is an unknown random vector, which is drawn from a multivariate normal distribution with mean $\mu$ and variance $\Sigma$. We further assume $\mu$ and $\Sigma$ are known.
+
+For a fixed time period T, the goal of this problem is to find a strategy $\pi$ to maximize the following expression
+\begin{equation}
+E^{\pi}\left[\sum_{t=1}^{T} Y_{t}\right].
+\end{equation}
+Or equivalently, we are trying to find a policy that can minimize the Bayes risk under $\pi$:
+\begin{equation}
+\text{Risk}(T,\pi) = E\left[\text{Regret}(\theta,T,\pi)\right],
+\end{equation}
+
+where the cumulative regret is defined as the following:
+\begin{equation}
+\text{Regret}(\theta_{0},T,\pi)=\sum_{t=1}^{T}E\left[\max_{X\in \mathcal{U}_{r}}X\cdot\theta_{0}-X_{t}\cdot \theta_{0}|\theta=\theta_{0}\right].
+\end{equation}
+
+
+
+
+
+\section{PEGE}
+
+We are interested in the multi armed bandits problem with correlated arms. Theoretically this problem can be solved using dynamic programming, however it usually suffers from the curse of dimensionality when the dimension of the arm is high. Thus, it is desirable to develop some computational feasible heuristic algorithms.
+
+In \textit{Linearly Parameterized Bandits} written by \textit{Paat Rusmevichientong} and \textit{John N. Tsitsiklis}, they proved the following theorem which gives a lower bound for the bayes risk:
+
+\begin{theorem}(Lower Bound)
+Consider a bandit problem where the set of arms is the unit sphere in $\mathbb{R}^{r}$, and $\epsilon_{t}$ has a standard normal distribution with mean 0 and variance one for all t and $X_{t}$. If $\theta$ has a multivariate normal distribution with mean $\bold{0}$ and covariance matrix $\bold{I}_{r}/r$, then for all policies $\pi$ and every $T\geq r^{2}$,
+\begin{equation}
+\text{Risk}(T,\pi)\geq 0.006r\sqrt{T}. \nonumber 
+\end{equation}
+\end{theorem}
+
+In their paper, they also provided a simple algorithm called Phased Exploration and Greedy Exploitation (PEGE) (Algorithm \ref{alg:PEGE}) that reaches the corresponding lower bound, i.e the bayes risk for PEGE is $O(r\sqrt{T})$. In order for the algorithm to work, it requires the following two assumptions:
+
+\begin{assumption}
+\begin{itemize}
+\item There exists a positive constant $\sigma_{0}$ such that for any $r\geq 2$, $\textbf{u}\in \mathcal{U}_{r}$, $t\geq 1$ and $x\in \mathbb{R}$, we have $E[e^{x \epsilon_{t}}]\leq e^{\frac{x^{2}\sigma_{0}^{2}}{2}}$.
+\item There exists positive constants $\bar{u}$ and $\lambda_{0}$ such that for any $r\geq 2$,
+\begin{equation}
+\max_{u\in \mathbb{U}^{r}}\|\textbf{u}\|\leq \bar{u} \nonumber
+\end{equation}
+and the set of arms $\mathcal{U}_{r}\subset 
+\mathbb{R}^{r}$ has r linearly independent elements $\textbf{b}_{1},\cdots,\textbf{b}_{r}$ such that $\lambda_{\min}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})\geq \lambda_{0}$.
+\end{itemize}
+\end{assumption}
+
+% Unit sphere, or are the above two assumptions the derivation of it?
+
+
+\begin{assumption}
+We say that a set of arms $\mathcal{U}_{r}$ satisfies the smooth best arm response with parameter J (SBAR(J), for short) condition if for any nonzero vector $\textbf{z}\in \mathbb{R}^{r}\setminus\{\textbf{0}\}$, there is a unique set best arm $\textbf{u}^{*}(\textbf{z})\in \mathcal{U}_{r}$ that gives the maximum expected reward, and for any two unit vectors $\textbf{z}\in \mathbb{R}^{r}$ an $\textbf{y}\in \mathbb{R}^{r}$ with $\|\textbf{z}\|=\|\textbf{y}\|=1$, we have
+\begin{equation}
+\|\textbf{u}^{*}(\textbf{z})-\textbf{u}^{*}(\textbf{y})\|\leq J \|\textbf{z}-\textbf{y}\| \nonumber 
+\end{equation}
+\end{assumption}
+
+
+\begin{algorithm}\label{alg:PEGE}
+\caption{Phased Exploration and Greedy Exploitation}
+\textbf{Description}: For each cycle $c\geq 1$, complete the following two phases:
+\begin{itemize}
+\item [1. ] \textbf{Exploration (r periods)} For $k=1,2,\cdots,r$, play arm $\textbf{b}_{k}\in \mathcal{U}_{r}$ given in Assumption 1(b), and observe the reward $Y^{b_{k}}(c)$. Compute the OLS estimate $\hat{\theta}(c)\in \mathbb{R}^{r}$, given by
+\begin{align}
+\hat{\theta}(c)&=\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}Y^{b_{k}}(s) \nonumber \\
+&=\textbf{Z}+\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}\epsilon^{b_{k}}(s) \nonumber 
+\end{align}
+where for any k, $Y^{b_{k}}(s)$, and $\epsilon^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle s.
+\item [2. ] \textbf{Exploitation ($\bold{c}$ periods)} Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathcal{U}^{r}}\textbf{v}^{'}\hat{\theta}(c)$ for $c$ periods.
+\end{itemize}
+\end{algorithm}
+
+
+Under these two conditions, the Bayes risk for the PEGE algorithm is at most $O(r\sqrt{T})$.
+
+\begin{theorem}
+Suppose that assumption 1 holds and that the set $\mathcal{U}_{r}$ satisfy the SBAR(J) condition. In addition, there exists a constant $M>0$ such that for every $r\geq 2$ we have $E[\|\theta\|]\leq M$ and $E[1/\|Z\|]\leq M$. Then, there exist a positive constant $a_{1}$ that depends only on $\sigma_{0}$, $\bar{u}$, $\lambda_{0}$, J and M, such that for any $T\geq r$,
+\begin{equation}
+Risk(T,PEGE)\leq a_{1}r\sqrt{T} \nonumber 
+\end{equation}
+
+\end{theorem}
+
+The proof of the theorem is you calculate the bayes risk for the exploitation and exploration periods respectively and add them together. In order to prove the above mentioned theorem, it requires the following two lemmas:
+\begin{lemma}
+Under Assumption 1, there exists a positive constant $h_{1}$ that depends only on $\sigma_{0}$, $\bar{u}$ and $\lambda_{0}$ such that for any $\textbf{z}\in \mathbb{R}^{r}$ and $c\geq 1$,
+\begin{equation}
+E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq \frac{h_{1}r}{c} 
+\end{equation} 
+\end{lemma}
+
+\begin{lemma}
+Suppose that Assumption 1 holds and the set $\mathbb{U}_{r}$ satisfy the SBAR(J) condition. Then, there exists a positive constant $h_{2}$ that depends only on $\sigma_{0}$, $\bar{u}$, $\lambda_{0}$ and J, such that for any $\textbf{z}\in \mathbb{R}^{r}$ and $c\geq 1$,
+\begin{align}
+&E \left[ \max_{\textbf{u}\in \mathcal{U}_{r}} \theta_{0}^{'}(\textbf{u}-\textbf{G}(c))|\theta=\theta_{0}\right] \nonumber \\
+\leq & \frac{2}{\|\theta_0\|}E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq
+\frac{2h_{1}r}{c\|\theta_{0}\|} =\frac{h_2r}{c\|\theta_0\|}
+\end{align}
+\end{lemma}
+
+
+\paragraph{Regret of PEGE}
+We analyse the convergence order of PEGE based on the above assumptions and lemmas:
+
+In the $k$th step of an $r$-period exploration, we have the observation:
+\[\text{E}\left[\max_{X\in\mathcal{U}_r} X\cdot \theta_0 - \bold{b}_k\cdot\theta_0 | \theta = \theta_0\right]\leq 2\bar{u}\cdot\|\theta_0\|\]
+
+
+Suppose there are $C$ cycles in the learning (the last cycle may not be completed), then the number of steps is
+\begin{align}
+T \geq r(C-1) + {C(C-1)}/{2}\label{TC:PEGE}
+\end{align}
+Thus, $C\leq \sqrt{2T}$.
+\begin{align}
+&\text{Regret}(\theta_0, T, PEGE)\leq  \sum_{c=1}^{C}\left[2\bar{u}\|\theta_0\| \cdot r + \frac{rh_2}{c\|\theta_0\|}\cdot c\right] \nonumber\\
+= & (2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})rC
+<  \sqrt{2}(2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})r\sqrt{T} \label{reg:PEGE}
+\end{align}
+
+Although the PEGE algorithm reaches the theoretical bayes risk lower bound, it doesn't perform well in practice. Thus, we proposed the following three modified PEGE algorithms, which still have $O(r\sqrt{T})$ bayes risk, but with a smaller coefficient.
+% with a smaller constant?
+
+%%%%%%%%%%%%%%%%%%%%%% Modifications 1 %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{modification}
+In the first modified algorithm, instead of doing c periods of exploitation in cycle c, we now do kc periods of exploitation, where k is a constant (Algorithm \ref{alg:PEGE1}).
+\begin{algorithm}\label{alg:PEGE1}
+\caption{PEGE Modified 1}
+\textbf{Description}: For each cycle $c\geq 1$, complete the following two phases:
+\begin{itemize}
+\item [1. ] \textbf{Exploration (r periods)} For $k=1,2,\cdots,r$, play arm $\textbf{b}_{k}\in \mathcal{U}_{r}$ given in Assumption 1(b), and observe the reward $Y^{b_{k}}(c)$. Compute the OLS estimate $\hat{\theta}(c)\in \mathbb{R}^{r}$, given by
+\begin{align}
+\hat{\theta}(c)&=\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}Y^{b_{k}}(s) \nonumber \\
+&=\textbf{Z}+\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}\epsilon^{b_{k}}(s) \nonumber 
+\end{align}
+where for any k, $Y^{b_{k}}(s)$, and $\epsilon^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle s.
+\item [2. ] \textbf{Exploitation ($\bold{kc}$ periods)} Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathcal{U}^{r}}\textbf{v}^{'}\hat{\theta}(c)$ for $kc$ periods.
+\end{itemize}
+\end{algorithm}
+\paragraph{Regret of Modification 1:}
+In this case, we modify the regret bound in equation (\ref{TC:PEGE}), (\ref{reg:PEGE}), and get
+\begin{align}
+T \geq r(C-1)+k{C(C-1)}/{2}
+\end{align}
+When $k<2r$, $C\leq\sqrt{\frac{2T}{k}}$. Therefore
+\begin{align}
+& \text{Regret}(\theta_0, T, PEGE1)\leq (2\bar{u}\|\theta_0\|+k\frac{h_2}{\|\theta_0\|})rC \nonumber\\
+\leq & \sqrt{2}(2\bar{u}\|\theta_0\|/\sqrt{k}+\sqrt{k}\frac{h_2}{\|\theta_0\|})r\sqrt{T}
+\end{align}
+A suitable $k$ which minimises this upper bound is
+\[k^*=\frac{2\bar{u}\|\theta_0\|^2}{h_2}\]
+However, since we do not know $\|\theta_0\|$ in advance, we need to estimate it base on the prior distribution of $\theta$ and may also adjust our estimation adaptively based on the results we get in each step.
+\end{modification}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%% Modifications 2 %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{modification}
+In the second modified algorithm (Algorithm \ref{alg:PEGE2}), instead of doing exploration and exploitation in turns, we stop the exploration if
+\begin{equation}
+\|\hat{\theta}(c)-\hat{\theta}(c+1)\|<\delta .\nonumber 
+\end{equation}
+
+
+% Use delta instead of epsilon to make it different from the measurement error?
+
+
+\begin{algorithm}\label{alg:PEGE2}
+\caption{PEGE Modified 2}
+\textbf{Description}: For each cycle $c\geq 1$, complete the following two phases:
+\begin{itemize}
+\item [1. ] \textbf{Exploration (r periods)} For $k=1,2,\cdots,r$, play arm $\textbf{b}_{k}\in \mathcal{U}_{r}$ given in Assumption 1(b), and observe the reward $Y^{b_{k}}(c)$. Compute the OLS estimate $\hat{\theta}(c)\in \mathbb{R}^{r}$, given by
+\begin{align}
+\hat{\theta}(c)&=\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}Y^{b_{k}}(s) \nonumber \\
+&=\theta+\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}\epsilon^{b_{k}}(s) \nonumber 
+\end{align}
+where for any k, $Y^{b_{k}}(s)$, and $\epsilon^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle s.
+\item [2. ] \textbf{Exploitation (c periods)} Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathcal{U}^{r}}\textbf{v}^{'}\hat{\theta}(c)$ for c periods.
+\end{itemize}
+
+\end{algorithm}
+
+
+\paragraph{Regret of Modification 2:}
+Now we discuss the optimal $\delta$ and the regret:
+
+\begin{theorem}
+Suppose $E\left[\left.\|\hat{\theta}(c_{0})-\theta_0\|^2 \right |\theta = \theta_0\right]<\epsilon=$, then doing pure exploitation thereafter will also give us $O(r\sqrt{T})$ regret.
+\end{theorem}
+\begin{proof}
+Denote $N = T-(c_{0}r+\frac{c_{0}(c_{0}+1)}{2})$ and suppose we can do K more cycles in the rest of the N periods. In order to show the new algorithm reaches $O(r\sqrt{T})$ regret bound, we just need to show
+\begin{align}
+\frac{2\epsilon N}{\|\theta_{0}\|}\leq (2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})rK \nonumber 
+\end{align}
+This is equivalent to show
+\begin{align}
+\epsilon\leq \frac{(2\bar{\mu}\|\theta_{0}\|^{2}+h_{2})rK}{2N}. \nonumber 
+\end{align}
+
+\end{proof}
+
+However, since we can not observe $E\left[\left.\|\hat{\theta}(c_{0})-\theta_0\|^2 \right |\theta = \theta_0\right]$ during the forwarding process, the following theorem shows us how to use $\|\hat{\theta}(c)-\hat{\theta}(c+1)\|=\bold{\delta}$ to construct a upper bound.
+
+\begin{theorem}
+sdaf
+\end{theorem}
+\begin{proof}
+We first consider the case where T is fixed. For a fixed $\theta_{0}$, we consider the regret over one sample path S. Suppose we do pure exploitation after $\|\hat{\theta}(c_{0}(S))-\hat{\theta}(c_{0}(S)+1)\|^2<\delta$, then we know the total regret for this sample path is
+\begin{align}
+(2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})c_{0}(S)r+\frac{2\|\hat{\theta}(c(S))-\theta_{0}\|^{2}N(S)}{\|\theta_{0}\|},
+\end{align}
+where $N(S)$ denote the remaining steps after $c_{0}(S)$ cycles. 
+We first take the expectation with respect to different $\theta_{0}$, since the sample path S is the same, we know $c_{0}(S)$ will remain the same (This is because in the OLS, the $\epsilon^{b_{k}}$ will remain the same). Without loss of generality, we assume $\max\{E[\|\theta\|],E[\frac{1}{\|\theta\|}]\}\leq M$. Thus, the expectation of the regret over different $\theta$ is less or equal to
+\begin{align} 
+M(2\bar{u}+h_{2})c_{0}(S)r+2M E_{\theta}\|\hat{\theta}(c(S))-\theta_{0}\|^{2}N(S). \nonumber 
+\end{align}
+Now we take the expectation with respect to different sample paths, notice that 
+\begin{align}
+&E_{\theta}\|\hat{\theta}(c_{0}(S))-\theta_{0}\|^{2} \nonumber \\
+= &\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(s)}\sum_{k=1}^{r}(\epsilon^{b_{k}}(S))^{2}b_{k}^{'}B^{2}b_{k}, \nonumber
+\end{align}
+thus the bayes risk is
+\begin{align}
+&\text{Bayes Risk} \nonumber \\
+\leq &M(2\bar{u}+h_{2})E_{S}[c_{0}(S)]r \nonumber \\
+& +2M E_{S,\theta}\|\hat{\theta}(c(S))-\theta_{0}\|^{2}N(S) \nonumber \\
+\leq & M(2\bar{u}+h_{2})r \sqrt{2T} \nonumber \\
+&+2M N(S)E_{S}[\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}(\epsilon^{b_{k}}(s))^{2}b_{k}^{'}B^{2}b_{k}] \nonumber
+\end{align}
+Since
+\begin{align}
+&E_{S}[\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}(\epsilon^{b_{k}}(s))^{2}b_{k}^{'}B^{2}b_{k}] \nonumber \\
+= & E[E[\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}(\epsilon^{b_{k}}(s))^{2}b_{k}^{'}B^{2}b_{k}|c_{0}(S)]] \nonumber \\
+= & E[\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}E[(\epsilon^{b_{k}}(s))^{2}|c_{0}(S)]b_{k}^{'}B^{2}b_{k}] \nonumber \\
+\leq & E[\frac{1}{c}\sum_{s=1}^{c}\sum_{k=1}^{r}E[(\epsilon^{b_{k}}(s))^{2}]b_{k}^{'}B^{2}b_{k}] \nonumber \\
+\leq & E[(c_{0}(S)+1)(\frac{1}{c_{0}(S)}-\frac{1}{c_{0}(S)+1}) \nonumber \\
+&\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}E[(\epsilon^{b_{k}}(s))^{2}]b_{k}^{'}B^{2}b_{k}] \nonumber \\
+\leq & E_{S}[(c_{0}(S)+1)\|\hat{\theta(c_{0}(S))}-\hat{\theta(c_{0}(S)+1)}\|] \nonumber \\
+\leq & \delta \sqrt{2T} \nonumber 
+\end{align}
+
+\end{proof}
+
+
+
+\begin{theorem}
+\begin{align*}
+&E\left[\left.\|\hat{\theta}(c)-\theta_0\|^2 \right | \|\hat{\theta}(c)-\hat{\theta}(c+1)\|=\bold{\delta}, \theta = \theta_0\right]\\
+= & \frac{\delta^2}{c^2(c+1)^2} + \frac{1}{c+1}\text{tr}((\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1})
+\end{align*}
+%where $B=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}$.
+\end{theorem}
+\begin{proof}
+Let $W(c)=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\sum_{k=1}^{r}\bold{b}_k \epsilon_{c_k}$, for which $\epsilon_{c_k}$ is the measurement error of the $k$th period of exploration in the $c$th cycle. Then $E[W(c)]=\bold{0}$, $Cov(W(c))=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}$.
+We construct a $r$-dimensional Brownian motion $B(t)$ such that:
+\begin{align*}
+E[dB]/dt = &0\\
+E[d(BB')]/dt = &(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}
+\end{align*}
+Then it is easy to prove that \[\left(B(1), B(2), \cdots, B(c), B(c^2+c)\right)\] has the same distribution as \[\left(\hat{\theta}(1)-\theta_0, 2(\hat{\theta}(2)-\theta_0), \cdots, c(\hat{\theta}(c)-\theta_0), c(c+1)(\hat{\theta}(c)-\hat{\theta}(c+1)\right).\]
+According to the result from Brownian bridge, we know that
+\begin{align*}
+E[B(c)|B(c^2+c)] = & \frac{1}{c+1}B(c^2+c)\\
+Cov[B(c)|B(c^2+c)] = & \frac{c^2}{c+1}(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}
+\end{align*}
+Then
+\begin{align*}
+& E[\|B(c)\|^2|B(c^2+c)] \\
+=& \left(E[B(c)|B(c^2+c)]\right)^2 + tr\left(Cov[B(c)|B(c^2+c)] \right)\\
+=&\left(\frac{B(c^2+c)}{c+1}\right)^2+\frac{c^2}{c+1}tr\left((\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\right)
+\end{align*}
+Similarly, we have
+\begin{align*}
+& E\left[\left.\|\hat{\theta}(c)-\theta_0\|^2\right|\|\hat{\theta}(c)-\hat{\theta}(c+1)\|={\delta}\right] \\
+=& \frac{1}{c^2}\left(\frac{\delta^2}{(c+1)^2} + \frac{c^2}{c+1}tr\left((\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\right)\right)\\
+=& \frac{\delta^2}{c^2(c+1)^2}+ \frac{1}{c+1}tr\left((\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\right)
+\end{align*}
+\end{proof}
+\end{modification}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%% Modifications 2* %%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is a revised version of modification 2:
+\paragraph{Modification 2*}
+At the $c$th cycle, conditional on $\hat{\theta}(1), \cdots, \hat{\theta}(c-1),\hat{\theta}(c)$, we can get a more delicate estimation $E[\|\hat{\theta}(c)-\theta_0\|^2 | \hat{\theta}(1), \cdots, \hat{\theta}(c-1),\hat{\theta}(c)]$ instead of $E[\|\hat{\theta}(c)-\theta_0\|]$.
+As we have showed, $\hat{\theta}(c)-\theta_0=\frac{1}{c}\sum_{s=1}^c W(s)$, where $W(s)$ are i.i.d. $r$-dimentional normal variables. Suppose $W(i)\sim\mathcal{N}(0, \Sigma)$. Thus, we know:
+\begin{align*}
+\begin{array}{ll}
+\frac{1}{2}W(1)-\frac{1}{2}W(2)&=\hat{\theta}(1)-\hat{\theta}(2)\\
+\frac{2}{3}W(1)-\frac{1}{3}W(2)-\frac{1}{3}W(3)&=\hat{\theta}(1)-\hat{\theta}(3)\\
+\cdots &\cdots\\
+\frac{c-1}{c}W(1)-\frac{1}{c}W(2)-\cdots -\frac{1}{c}W(c)&=\hat{\theta}(1)-\hat{\theta}(c)
+\end{array}
+\end{align*}
+We can represent it as a linear system:
+\[A\vec{W}=\vec{b}\]
+\begin{align*}
+A=&\left(
+\begin{array}{ccccc}
+\frac{1}{2}&-\frac{1}{2}&0&\cdots&0\\
+\cdots&\cdots&\cdots&\cdots&\cdots\\
+\frac{c-1}{c}&-\frac{1}{c}&-\frac{1}{c}&\cdots&-\frac{1}{c}
+\end{array}\right)\\
+\vec{W}=&\left(\begin{array}{c}W'(1)\\ \cdots \\ W'(c)\end{array}\right)\\
+\vec{b}=&\left(\begin{array}{c}
+\hat{\theta}'(1)-\hat{\theta}'(2)\\
+\hat{\theta}'(1)-\hat{\theta}'(3)\\
+\cdots\\
+\hat{\theta}'(1)-\hat{\theta}'(c)
+\end{array}\right)
+\end{align*}
+The dimension of $A$ is $(c-1)$ by $c$. Using QR decomposition, we can decompose $A=LQ$, where $L$ is $(c-1)$ by $c$ lower triangular matrix, $Q$ is $c$ by $c$ orthogonal matrix. Let $\vec{V}=Q\vec{W}$. Then 
+\[L\vec{V}=\vec{b}\]
+We can solve the first $(c-1)$ rows of $\vec{V}$ while the last row of $\vec{V}$ remains unknown. Because $Q$ is orthogonal, $V(1),\cdots, V(c)$ are i.i.d. normal variables with the same distribution as $W(1),\cdots,W(c)$ have. Let
+\begin{align*}
+L=\left(L_1,\vec{0}\right)
+\end{align*}
+where $L_1$ is $(c-1)$ by $(c-1)$ invertible lower triangular matrix. Therefore,
+\[(V(1),\cdots,V(c-1))' = L_1^{-1}\vec{b}\]
+Since $V(c)$ is independent from $V(1),\cdots,V(c-1)$, $E[V(c)]=0$, $Cov(V(c))=\Sigma$.
+\begin{align*}
+& E[\|\hat{\theta}(c)-\theta_0\|^2|\hat{\theta}(1),\cdots,\hat{\theta}(c)]\\
+= & \frac{1}{c^2}E[\|\sum_{s=1}^{c} W(s)\|^2|\hat{\theta}(1),\cdots,\hat{\theta}(c)]\\
+= & \frac{1}{c^2}E[\|\sum_{s=1}^{c} V(s)\|^2|\hat{\theta}(1),\cdots,\hat{\theta}(c)]\\
+= & \frac{1}{c^2}\left(\|(1,1,\cdots,1)L_1^{-1}\vec{b}\|^2+tr(\Sigma)\right)
+\end{align*}
+In each cycle, we can compute $L_1^{-1}\vec{b}$. If $\|(1,1,\cdots,1)L_1^{-1}\vec{b}\|\leq\delta$, then  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%% Modifications 3 %%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{modification}
+In the third modified algorithm, it further modified the second algorithm: during the exploitation period, it also updates the ordinary least estimate each time (Algorithm \ref{alg:PEGE3}).
+
+\begin{algorithm}\label{alg:PEGE3}
+\caption{PEGE Modified 3}
+\textbf{Description}: For each cycle $c\geq 1$, complete the following two phases:
+\begin{itemize}
+\item [1. ] \textbf{Exploration (r periods)} For $k=1,2,\cdots,r$, play arm $\textbf{b}_{k}\in \mathcal{U}_{r}$ given in Assumption 1(b), and observe the reward $Y^{b_{k}}(c)$. Compute the OLS estimate $\hat{\theta}(c)\in \mathbb{R}^{r}$, given by
+\begin{align}
+\hat{\theta}(c)&=\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}Y^{b_{k}}(s) \nonumber \\
+&=\textbf{Z}+\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}\epsilon^{b_{k}}(s) \nonumber 
+\end{align}
+where for any k, $Y^{b_{k}}(s)$, and $\epsilon^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle s.
+\item [2. ] \textbf{Exploitation (c periods)} Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathcal{U}^{r}}\textbf{v}^{'}\hat{\theta}(c)$ for c periods.
+\end{itemize}
+\end{algorithm}
+\paragraph{Regret of Modification 3:}
+Since during the exploration periods, it will play the same arms as in algorithm $\ref{alg:PEGE2}$, we just need to show the regret during the exploitation periods is smaller than the regret of algorithm $\ref{alg:PEGE2}$. If we denote $\hat{\theta}(c,t)$ as the OLS estimator of $\theta$ during the $t_{th}$ exploitation period in the $c_{th}$ cycle, then to show algorithm $\ref{alg:PEGE3}$ has smaller regret during exploitation is equivalent to show 
+\begin{align}
+E[\|\hat{\theta}(c,t)-\theta_{0}\|^{2}|\theta=\theta_{0}] < E[|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}]. \label{alg3}
+\end{align}
+\begin{lemma}
+Suppose $X_{1}$ is a $n_{1}\times k $ matrix and $X_{2}$ is a $n_{2}\times k$ matrix, then
+\begin{equation}
+Trace(X_{1}^{T}X_{1}+X_{2}^{T}X_{2}) < Trace(X_{1}^{T}X_{1}). \nonumber
+\end{equation}
+\end{lemma}
+\begin{proof}
+Denote $A=X_{1}^{T}X_{1}$, then use the Woodbury matrix identity, we get
+\begin{align}
+&(X_{1}^{T}X_{1}+X_{2}^{T}X_{2})^{-1} \nonumber \\
+=& A^{-1}-A^{-1}X_{2}^{T}(I+X_{2}X_{2}^{T})^{-1}X_{2}A^{-1} \nonumber 
+\end{align}
+Thus, $Trace(X_{1}^{T}X_{1}+X_{2}^{T}X_{2}) < Trace(X_{1}^{T}X_{1})$ is equivalent to show $Trace(A^{-1}X_{2}^{T}(I+X_{2}X_{2}^{T})^{-1}X_{2}A^{-1})>0$. However, it is easy to see that $A^{-1}X_{2}^{T}(I+X_{2}X_{2}^{T})^{-1}X_{2}A^{-1}$ is a positive semidefinite matrix which means all of the eigenvalue is greater or equal to 0. Thus, our lemma holds.
+\end{proof}
+
+\begin{theorem}
+The algorithm $\ref{alg:PEGE3}$ has bayes risk $O(r\sqrt{T})$.
+\end{theorem}
+\begin{proof}
+As we discussed before, we just need to show $(\ref{alg3})$ holds true. Since we assume $\epsilon\sim N(0,\sigma^{2})$, thus the OLS estimator $\hat{\beta}$ of $Y=X\beta+\epsilon$ follows a normal distribution $\hat{\beta}\sim N(\beta,\sigma^{2}(X^{T}X)^{-1})$. Thus $E[\|\hat{\beta}-\beta\|^{2}]=\sigma^{2}Trace(X^{T}X)^{-1}$. If we denote $X(c,t)$ is the X vector for the $\hat{\theta(c,t)}$ and $X(c)$ is the X vector for the $\hat{\theta(c)}$, then $X(c,t)$ contains more rows than $X(c)$. Based on our previous lemma, we know $(\ref{alg3})$ holds true.
+\end{proof}
+
+
+\end{modification}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Heuristic Algorithms}
+There are two well known algorithms for this problem, which are Exponential Gradient algorithm and the upper confidence bound algorithm.\
+
+\textbf{Notations: }
+
+\begin{center}
+\begin{tabular}{ll}
+${x}_i$: & feature of the recommended restaurant at step $i$, binary vector\\
+$y_i$: & rate given by the user at step $i$, range is $(0,5)$\\
+${\theta}$: & user's preference\\
+${\mu_0}$: & prior knowledge of ${E}[{\theta}]$ \\
+$\Sigma_0$: & prior knowledge of Cov$(\theta)$
+\end{tabular}
+\end{center}
+
+At each step, we assume the user's rating $y_i = \theta\cdot {x}_i+\epsilon$, where $\epsilon\sim\mathcal{N}(0,\sigma^2)$.
+
+\subsection{Upper Confidence Bound}
+At step $t+1$, we have knowledge $\mu_0,\ \Sigma_0,\ ({x}_1, y_1), \cdots, ({x}_{t}, y_t)$. The distribution 
+\[\theta | [ \mu_0,\ \Sigma_0,\ ({x}_1, y_1), \cdots, ({x}_{t}, y_t) ] \sim \mathcal{N}(\mu_{t}, \Sigma_{t}) \]
+where 
+\begin{align}
+\Sigma_{t}^{-1} = & \Sigma_0^{-1}+\frac{1}{\sigma^2}X_t^TX_t &=& \Sigma_t^{-1} + \frac{1}{\sigma^2}{x}_t{x}_t^T\\
+\mu_t = & \Sigma_t\left( \Sigma_0^{-1}\mu_0 + \frac{1}{\sigma^2}X_t^Ty \right) &= &\Sigma_t\left(\Sigma_{t-1}\mu_{t-1}+\frac{1}{\sigma^2}{x}_t y_t\right)
+\end{align}
+where 
+\begin{align*}
+X_t = \left(
+\begin{array}{c}
+{x}_1^T\\
+\vdots\\
+{x}_t^T
+\end{array}\right)
+\end{align*}
+
+Then, for each restaurant $r$, we suppose its feature vector is ${x}^{(r)}$. And its expected rating and variance are
+\[E[{x}^{(r)}\cdot \theta] = {x}^{(r)}\cdot \mu_t,\quad Var({x}^{(r)}\cdot \theta) =({x}^{(r)})^T\Sigma_t {x}^{(r)} \]
+The restaurant we will recommend at step $t+1$ is
+\[r_t = \arg\max_r E[{x}^{(r)}\cdot \theta] + 1.96 \sqrt{Var({x}^{(r)}\cdot \theta)}\]
+
+\subsection{Upper Confidence Bound Algorithms}
+
+Upper confidence bound algorithms (UCB) are widely used in multiarmed
+bandit problems because these algorithms usually have good empirical performance. 
+However, they are not as fast as other methods like the EXP3 algorithm, and this may be a problem
+when the number of stages is very big.
+
+UCB algorithms follow two steps. First, at time $t$, for each arm
+$u$ we compute a upper confidence bound $U_{t}\left(u\right)$. Then,
+at time $t$ we choose the arm $u^{*}$ such that $u^{*}\in\mbox{arg max}_{u}U_{t}\left(u\right)$,
+i.e. $u^{*}$ has the maximal upper confidence bound. 
+
+In our project, we start supposing that $\theta\sim N\left(\mu_{0},\Sigma_{0}\right)$
+where $\mu_{0}$ and $\Sigma_{0}$ are computed using the available
+data. We have that $\theta\sim N\left(\mu_{t},\Sigma_{t}\right)$
+at step $t+1$, where $\mu_{t},\Sigma_{t}$ are the paramaters of
+the posterior distribution of $\theta$ after we have seen $x_{1},y_{1},\ldots,x_{t},y_{t}$
+. Specifically,
+\begin{eqnarray*}
+\mu_{t} & = & \Sigma_{t}\left(\Sigma_{0}^{-1}\mu_{0}+\frac{1}{\sigma^{2}}X_{i}^{T}y\right)\\
+ & = & \Sigma_{t}\left(\Sigma_{t-1}\mu_{t-1}+\frac{1}{\sigma^{2}}x_{t}y_{t}\right)\\
+\Sigma_{t}^{-1} & = & \Sigma_{0}^{-1}+\frac{1}{\sigma^{2}}X_{t}^{t}X_{t}=\Sigma_{t}^{-1}+\frac{1}{\sigma^{2}}x_{t}x_{t}^{t}
+\end{eqnarray*}
+where 
+\[
+X_{t}=\left(\begin{array}{c}
+x_{1}^{t}\\
+\vdots\\
+x_{t}^{t}
+\end{array}\right).
+\]
+
+
+Consequently an upper bound of the $.95-$confidence interval of the distribution
+of $y\left(u\right)$ is 
+\[
+E_{\mu_{t},\Sigma_{t}}\left[x^{\left(u\right)}\cdot\theta\right]+1.96\sqrt{\mbox{Var}_{\mu_{t},\Sigma_{t}}\left(x^{\left(u\right)}\cdot\theta\right)}
+\]
+and then we will choose the arm $u^{*}=\mbox{arg max}_{u}\left(E_{\mu_{t},\Sigma_{t}}\left[x^{\left(u\right)}\cdot\theta\right]+1.96\sqrt{\mbox{Var}_{\mu_{t},\Sigma_{t}}\left(x^{\left(u\right)}\cdot\theta\right)}\right)$
+at step $t+1$. In terms of our example, the arms are restaurants
+and the vector $x^{\left(u\right)}$ is a binary vector that represents
+the categories of the restaurant $u$.
+
+\subsection{Exponentiated Gradient Algorithm for Bandit Setting (EXP3)}
+
+This is a randomized algorithm. It keeps a vector of probabilities
+for each of the arms, and it chooses an arm according to this vector.
+The weight of the arm chosen is increased when the loss is small and
+decreased when the loss is high. Specifically, the algorithm is
+\begin{enumerate}
+\item Given $\gamma\in\left[0,1\right]$, initialize the weights $w_{u}\left(1\right)=1$
+for each arm $u$.
+\item At each step $t$:
+
+\begin{enumerate}
+\item Set $p_{u}\left(t\right)=\left(1-\gamma\right)\frac{w_{u}\left(t\right)}{\sum_{j}w_{j}\left(t\right)}+\frac{\gamma}{K}$
+for each arm $u$.
+\item Draw the arm $u_{t}$ choosen according to the distribution $p_{u_{t}}\left(t\right)$.
+\item Observe the loss $y_{u_{t}}\left(t\right)$.
+\item Set $w_{u_{t}}\left(t+1\right)=w_{u_{t}}\left(t\right)\mbox{exp}\left(\gamma\frac{y_{u_{t}}\left(t\right)}{p_{u_{t}}\left(t\right)m}\right)$,
+and $w_{j}\left(t+1\right)=w_{j}\left(t\right)$ for all other arms. 
+\end{enumerate}
+\end{enumerate}
+This algorithm is usually fast, but if there are too many arms, the
+weights may be zero in most of the cases. 
+
+
+
+\section{Numerical Experiment}
+In this simulation, we use the yelp academic dataset. The goal of this simulation is to find the favorite restaurant categories for a new user. There are 4596 restaurants in the dataset and each restaurant belongs to one or multiple categories. We first find the top twenty categories that has most restaurants, which are Pizza, Sandwiches, Food etc, and use those 20 categories as our feature. For each restaurant, if it belongs to certain category, then the corresponding element of its feature vector is 1 and 0 otherwise. So the feature vector of each restaurant is a 20 dimensional binary vector. 
+
+For each user, we calculated his user preference vector based on his rating and the restaurants' feature vectors that he rated using ridge regression (since there are not too many ratings, ordinary linear regression doesn't work here due to singularity). Then we calculated the sample mean and the sample variance of all users' preference vector and denote them as $(\mu,\Sigma)$. We further assume that for each user's preference vector $\theta\sim N(\mu,\Sigma)$ and generate new user from this distribution.
+
+
+
+\section{Possible Applications}
+
+Recommender systems want to find the preference that a user would give to a subset of a finite set of items. They're widely applied to different problems. For example, they're used in Netflix where there are thousands of movies and TV episodes. The biggest challenge of these problems is that there are millions of objets and hundreds of million of users, and so it's necessary to find a model that performs well and be sufficiently fast.
+
+
+
+\nocite{langley00}
+
+\bibliography{example_paper}
+\bibliographystyle{icml2012}
+
+
+%\begin{thebibliography}
+%[1] Robbins Herbert, \emph{Some aspects of the sequential design of experiments}, Bulletin of the American Mathematical Society 58 (5): 527535
+%
+%[2] J.C. Gittins, \emph{Bandit Processes and Dynamic Allocation Indices}, Journal of the Royal Statistical Society, Series B (Methodological) 41 (2): 148177
+%
+%[3] X Zhao, P Frazier, \emph{Exploration vs. Exploitation in the Information Filtering Problem}
+%
+%[2] Paat Rusmevichientong, John N. Tsitsiklis, \emph{Linearly Parameterized Bandits}
+%\end{thebibliography}
+
+\end{document} 
+
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was
+% created by Lise Getoor and Tobias Scheffer, it was slightly modified  
+% from the 2010 version by Thorsten Joachims & Johannes Fuernkranz, 
+% slightly modified from the 2009 version by Kiri Wagstaff and 
+% Sam Roweis's 2008 version, which is slightly modified from 
+% Prasad Tadepalli's 2007 version which is a lightly 
+% changed version of the previous year's version by Andrew Moore, 
+% which was in turn edited from those of Kristian Kersting and 
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.  
+
+
