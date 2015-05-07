@@ -254,13 +254,87 @@ However, since we do not know $\|\theta_0\|$ in advance, we need to estimate it 
 %%%%%%%%%%%%%%%%%%%%%% Modifications 2 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{modification}
-In the second modified algorithm (Algorithm \ref{alg:PEGE2}), instead of doing exploration and exploitation in turns, we stop the exploration if
-\begin{equation}
-\|\hat{\theta}(c)-\hat{\theta}(c+1)\|<\delta .\nonumber 
-\end{equation}
+Are you kidding me?
 
 
-% Use delta instead of epsilon to make it different from the measurement error?
+
+%%%%%%%%%%%%%%%%%%%%%% Modifications 2* %%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is a revised version of modification 2:
+
+To be brief, we introduce notations
+ \[W(c)=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\sum_{k=1}^{r}\bold{b}_{k}\epsilon^{\bold{b}_k}(c),\] 
+ \[Z(c) =(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\sum_{k=1}^{r}\bold{b}_{k}Y^{\bold{b}_k}(c).\] 
+
+At $c$th cycle, conditional on $Z(1), \cdots, Z(c)$ (we will use $Z(1,\cdots, c)$ later), which are observable, we can get a more delicate estimation $E[\|\hat{\theta}(c)-\theta_0\|^2 | Z(1,\cdots, c), \theta = \theta_0]$ instead of $E[\|\hat{\theta}(c)-\theta_0\|^2|\theta=\theta_0]$. In addition, we can estimate $\hat{\theta}(c)$ as a weighted summation instead of the average to make the above value even smaller.
+
+It is easy to find that $W(1),\cdots, W(c)\stackrel{i.i.d.}{\sim}\mathcal{N}(\vec{0},\Sigma)$. Here 
+\[\Sigma=\sigma^2(B^TB)^{-1},\quad \text{for which }B=(\bold{b}_1,\cdots,\bold{b}_r).\]
+We have
+\begin{align*}
+\begin{array}{ll}
+W(1)-W(2)&=Z(1)-Z(2)\\
+W(1)-W(3)&=Z(1)-Z(3)\\
+\cdots &\cdots\\
+W(1)-W(c)&=Z(1)-Z(c)
+\end{array}
+\end{align*}
+We can represent the relations by matrices:
+\[A\vec{W}=\vec{Z}\]
+\begin{align*}
+A=&\left(
+\begin{array}{ccccc}
+1&-1&0&\cdots&0\\
+1&0&-1&\cdots&0\\
+\cdots&\cdots&\cdots&\cdots&\cdots\\
+1&0&0&\cdots&-1
+\end{array}\right)\\
+\vec{W}=&\left(\begin{array}{c}W'(1)\\W'(2)\\ \cdots \\ W'(c)\end{array}\right),\quad \vec{Z}=\left(\begin{array}{c}
+Z'(1)-Z'(2)\\
+Z'(1)-Z'(3)\\
+\cdots\\
+Z'(1)-Z'(c)
+\end{array}\right)
+\end{align*}
+The dimension of $A$ is $(c-1)$ by $c$. Using QR decomposition, we can get $A=LQ$, where $L$ is $(c-1)$ by $c$ lower triangular matrix, $Q$ is $c$ by $c$ orthogonal matrix. Let ${V}=Q\vec{W}$. Then 
+\[L{V}=\vec{Z}\]
+Further, we assume
+\begin{align*}
+L=(\tilde{L},\vec{0}),\quad {V}=\left(\begin{array}{c}\tilde{V}\\\vec{v}_c\end{array}\right),\quad Q=\left(\begin{array}{c}\tilde{Q}\\\vec{q}_c\end{array}\right),
+\end{align*}
+where $\tilde{L}$ is $(c-1)\times (c-1)$ invertible matrix, $\tilde{V}$ is $(c-1)\times r$ matrix, $\tilde{Q}$ is $(c-1)\times c$ matrix, $\vec{0}$ is $c-1$ dimensional column vector, $\vec{v}_c$ is $r$ dimensional row vector, and $\vec{q}_c$ is $c$ dimensional row vector. Then
+\[\vec{Z}=LV = \tilde{L}\tilde{V} \quad \Rightarrow \quad \tilde{V}=\tilde{L}^{-1}\vec{Z}.\]
+\[\vec{W}=Q'V=\tilde{Q}'\tilde{V}+\vec{q}_c'\vec{v}_c=\tilde{Q}'\tilde{L}^{-1}\vec{Z}+\vec{q}_c'\vec{v}_c\]
+Since $\vec{v}_c$ is independent of $\tilde{V}$, conditional on all the results in the explorations, the distribution of $\vec{v}_c$ is still $\mathcal{N}(\vec{0},\Sigma)$.
+
+Suppose we use 
+\[
+\hat{\theta}(c)=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\sum_{s=1}^{c}w_s\sum_{k=1}^{r}\bold{b}_kY^{b_k}(s)=\theta_0+\sum_{s=1}^{c}w_s W(s)
+\]
+as the estimator of $\theta_0$ in the $c$th cycle, where $\sum_{s=1}^{c}w_s=1$. Let $\vec{w}=(w_1,\cdots,w_c)'$. Conditional on $Z(1),\cdots,Z(c)$, 
+\begin{align*}
+&E[\|\hat{\theta}(c)-\theta_0\|^2|Z(1,\cdots,c),\theta=\theta_0]\\
+=&E[\vec{w}'\vec{W}\vec{W}'\vec{w}|Z(1,\cdots,c),\theta=\theta_0]\\
+=& \vec{w}'\left(\tilde{Q}'\tilde{L}^{-1}\vec{Z}\vec{Z}'\tilde{L}'^{-1}\tilde{Q} + tr(\Sigma)\vec{q}_c'\vec{q}_c\right)\vec{w}\\
+:=&\vec{w}' A(c) \vec{w}
+\end{align*}
+Since $tr(\Sigma)=\sigma^2(B^TB)^{-1}$, and $\sigma$ is unknown to us, we use 
+\[\hat{\sigma}^2(c)=\frac{1}{r(c-1)}\left(\sum_{s=1}^{c}\|Z(s)\|^2-\frac{\|\sum_{s=1}^{c}Z(s)\|^2}{c}\right)\]
+as an estimator of $\sigma^2$ for $c>1$.
+
+The optimal $\vec{w}$ that minimizes this equation is 
+\[\vec{w}^*=\frac{A^{-1}(c)\vec{\bold{1}}}{\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}}},\quad \text{for which }\vec{\bold{1}}=(1,\cdots,1)'.\]
+Thus,
+\begin{align*}
+&E[\|\hat{\theta}(c)-\theta_0\|^2|Z(1,\cdots,c),\theta=\theta_0]\\
+\geq & (\vec{w}^*)'A(c)\vec{w}^*
+=\frac{\vec{\bold{1}}'A^{-1}(c)A(c)A^{-1}(c)\vec{\bold{1}}}{(\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}})^2}\\
+=&\frac{\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}}}{(\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}})^2}=\frac{1}{\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}}}
+\end{align*}
+
+In cycle $c$, we denote $\frac{1}{\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}}}$ as $\delta(c)$. Then 
+
+
+
 
 
 \begin{algorithm}\label{alg:PEGE2}
@@ -278,151 +352,7 @@ where for any k, $Y^{b_{k}}(s)$, and $\epsilon^{b_{k}(s)}$ denote the observed r
 
 \end{algorithm}
 
-
-\paragraph{Regret of Modification 2:}
-Now we discuss the optimal $\delta$ and the regret:
-
-\begin{theorem}
-Suppose $E\left[\left.\|\hat{\theta}(c_{0})-\theta_0\|^2 \right |\theta = \theta_0\right]<\epsilon=$, then doing pure exploitation thereafter will also give us $O(r\sqrt{T})$ regret.
-\end{theorem}
-\begin{proof}
-Denote $N = T-(c_{0}r+\frac{c_{0}(c_{0}+1)}{2})$ and suppose we can do K more cycles in the rest of the N periods. In order to show the new algorithm reaches $O(r\sqrt{T})$ regret bound, we just need to show
-\begin{align}
-\frac{2\epsilon N}{\|\theta_{0}\|}\leq (2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})rK \nonumber 
-\end{align}
-This is equivalent to show
-\begin{align}
-\epsilon\leq \frac{(2\bar{\mu}\|\theta_{0}\|^{2}+h_{2})rK}{2N}. \nonumber 
-\end{align}
-
-\end{proof}
-
-However, since we can not observe $E\left[\left.\|\hat{\theta}(c_{0})-\theta_0\|^2 \right |\theta = \theta_0\right]$ during the forwarding process, the following theorem shows us how to use $\|\hat{\theta}(c)-\hat{\theta}(c+1)\|=\bold{\delta}$ to construct a upper bound.
-
-\begin{theorem}
-sdaf
-\end{theorem}
-\begin{proof}
-We first consider the case where T is fixed. For a fixed $\theta_{0}$, we consider the regret over one sample path S. Suppose we do pure exploitation after $\|\hat{\theta}(c_{0}(S))-\hat{\theta}(c_{0}(S)+1)\|^2<\delta$, then we know the total regret for this sample path is
-\begin{align}
-(2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})c_{0}(S)r+\frac{2\|\hat{\theta}(c(S))-\theta_{0}\|^{2}N(S)}{\|\theta_{0}\|},
-\end{align}
-where $N(S)$ denote the remaining steps after $c_{0}(S)$ cycles. 
-We first take the expectation with respect to different $\theta_{0}$, since the sample path S is the same, we know $c_{0}(S)$ will remain the same (This is because in the OLS, the $\epsilon^{b_{k}}$ will remain the same). Without loss of generality, we assume $\max\{E[\|\theta\|],E[\frac{1}{\|\theta\|}]\}\leq M$. Thus, the expectation of the regret over different $\theta$ is less or equal to
-\begin{align} 
-M(2\bar{u}+h_{2})c_{0}(S)r+2M E_{\theta}\|\hat{\theta}(c(S))-\theta_{0}\|^{2}N(S). \nonumber 
-\end{align}
-Now we take the expectation with respect to different sample paths, notice that 
-\begin{align}
-&E_{\theta}\|\hat{\theta}(c_{0}(S))-\theta_{0}\|^{2} \nonumber \\
-= &\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(s)}\sum_{k=1}^{r}(\epsilon^{b_{k}}(S))^{2}b_{k}^{'}B^{2}b_{k}, \nonumber
-\end{align}
-thus the bayes risk is
-\begin{align}
-&\text{Bayes Risk} \nonumber \\
-\leq &M(2\bar{u}+h_{2})E_{S}[c_{0}(S)]r \nonumber \\
-& +2M E_{S,\theta}\|\hat{\theta}(c(S))-\theta_{0}\|^{2}N(S) \nonumber \\
-\leq & M(2\bar{u}+h_{2})r \sqrt{2T} \nonumber \\
-&+2M N(S)E_{S}[\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}(\epsilon^{b_{k}}(s))^{2}b_{k}^{'}B^{2}b_{k}] \nonumber
-\end{align}
-Since
-\begin{align}
-&E_{S}[\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}(\epsilon^{b_{k}}(s))^{2}b_{k}^{'}B^{2}b_{k}] \nonumber \\
-= & E[E[\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}(\epsilon^{b_{k}}(s))^{2}b_{k}^{'}B^{2}b_{k}|c_{0}(S)]] \nonumber \\
-= & E[\frac{1}{c_{0}(S)}\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}E[(\epsilon^{b_{k}}(s))^{2}|c_{0}(S)]b_{k}^{'}B^{2}b_{k}] \nonumber \\
-\leq & E[\frac{1}{c}\sum_{s=1}^{c}\sum_{k=1}^{r}E[(\epsilon^{b_{k}}(s))^{2}]b_{k}^{'}B^{2}b_{k}] \nonumber \\
-\leq & E[(c_{0}(S)+1)(\frac{1}{c_{0}(S)}-\frac{1}{c_{0}(S)+1}) \nonumber \\
-&\sum_{s=1}^{c_{0}(S)}\sum_{k=1}^{r}E[(\epsilon^{b_{k}}(s))^{2}]b_{k}^{'}B^{2}b_{k}] \nonumber \\
-\leq & E_{S}[(c_{0}(S)+1)\|\hat{\theta(c_{0}(S))}-\hat{\theta(c_{0}(S)+1)}\|] \nonumber \\
-\leq & \delta \sqrt{2T} \nonumber 
-\end{align}
-
-\end{proof}
-
-
-
-\begin{theorem}
-\begin{align*}
-&E\left[\left.\|\hat{\theta}(c)-\theta_0\|^2 \right | \|\hat{\theta}(c)-\hat{\theta}(c+1)\|=\bold{\delta}, \theta = \theta_0\right]\\
-= & \frac{\delta^2}{c^2(c+1)^2} + \frac{1}{c+1}\text{tr}((\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1})
-\end{align*}
-%where $B=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}$.
-\end{theorem}
-\begin{proof}
-Let $W(c)=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\sum_{k=1}^{r}\bold{b}_k \epsilon_{c_k}$, for which $\epsilon_{c_k}$ is the measurement error of the $k$th period of exploration in the $c$th cycle. Then $E[W(c)]=\bold{0}$, $Cov(W(c))=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}$.
-We construct a $r$-dimensional Brownian motion $B(t)$ such that:
-\begin{align*}
-E[dB]/dt = &0\\
-E[d(BB')]/dt = &(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}
-\end{align*}
-Then it is easy to prove that \[\left(B(1), B(2), \cdots, B(c), B(c^2+c)\right)\] has the same distribution as \[\left(\hat{\theta}(1)-\theta_0, 2(\hat{\theta}(2)-\theta_0), \cdots, c(\hat{\theta}(c)-\theta_0), c(c+1)(\hat{\theta}(c)-\hat{\theta}(c+1)\right).\]
-According to the result from Brownian bridge, we know that
-\begin{align*}
-E[B(c)|B(c^2+c)] = & \frac{1}{c+1}B(c^2+c)\\
-Cov[B(c)|B(c^2+c)] = & \frac{c^2}{c+1}(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}
-\end{align*}
-Then
-\begin{align*}
-& E[\|B(c)\|^2|B(c^2+c)] \\
-=& \left(E[B(c)|B(c^2+c)]\right)^2 + tr\left(Cov[B(c)|B(c^2+c)] \right)\\
-=&\left(\frac{B(c^2+c)}{c+1}\right)^2+\frac{c^2}{c+1}tr\left((\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\right)
-\end{align*}
-Similarly, we have
-\begin{align*}
-& E\left[\left.\|\hat{\theta}(c)-\theta_0\|^2\right|\|\hat{\theta}(c)-\hat{\theta}(c+1)\|={\delta}\right] \\
-=& \frac{1}{c^2}\left(\frac{\delta^2}{(c+1)^2} + \frac{c^2}{c+1}tr\left((\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\right)\right)\\
-=& \frac{\delta^2}{c^2(c+1)^2}+ \frac{1}{c+1}tr\left((\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\right)
-\end{align*}
-\end{proof}
 \end{modification}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%% Modifications 2* %%%%%%%%%%%%%%%%%%%%%%%%%%
-% This is a revised version of modification 2:
-\paragraph{Modification 2*}
-At the $c$th cycle, conditional on $\hat{\theta}(1), \cdots, \hat{\theta}(c-1),\hat{\theta}(c)$, we can get a more delicate estimation $E[\|\hat{\theta}(c)-\theta_0\|^2 | \hat{\theta}(1), \cdots, \hat{\theta}(c-1),\hat{\theta}(c)]$ instead of $E[\|\hat{\theta}(c)-\theta_0\|]$.
-As we have showed, $\hat{\theta}(c)-\theta_0=\frac{1}{c}\sum_{s=1}^c W(s)$, where $W(s)$ are i.i.d. $r$-dimentional normal variables. Suppose $W(i)\sim\mathcal{N}(0, \Sigma)$. Thus, we know:
-\begin{align*}
-\begin{array}{ll}
-\frac{1}{2}W(1)-\frac{1}{2}W(2)&=\hat{\theta}(1)-\hat{\theta}(2)\\
-\frac{2}{3}W(1)-\frac{1}{3}W(2)-\frac{1}{3}W(3)&=\hat{\theta}(1)-\hat{\theta}(3)\\
-\cdots &\cdots\\
-\frac{c-1}{c}W(1)-\frac{1}{c}W(2)-\cdots -\frac{1}{c}W(c)&=\hat{\theta}(1)-\hat{\theta}(c)
-\end{array}
-\end{align*}
-We can represent it as a linear system:
-\[A\vec{W}=\vec{b}\]
-\begin{align*}
-A=&\left(
-\begin{array}{ccccc}
-\frac{1}{2}&-\frac{1}{2}&0&\cdots&0\\
-\cdots&\cdots&\cdots&\cdots&\cdots\\
-\frac{c-1}{c}&-\frac{1}{c}&-\frac{1}{c}&\cdots&-\frac{1}{c}
-\end{array}\right)\\
-\vec{W}=&\left(\begin{array}{c}W'(1)\\ \cdots \\ W'(c)\end{array}\right)\\
-\vec{b}=&\left(\begin{array}{c}
-\hat{\theta}'(1)-\hat{\theta}'(2)\\
-\hat{\theta}'(1)-\hat{\theta}'(3)\\
-\cdots\\
-\hat{\theta}'(1)-\hat{\theta}'(c)
-\end{array}\right)
-\end{align*}
-The dimension of $A$ is $(c-1)$ by $c$. Using QR decomposition, we can decompose $A=LQ$, where $L$ is $(c-1)$ by $c$ lower triangular matrix, $Q$ is $c$ by $c$ orthogonal matrix. Let $\vec{V}=Q\vec{W}$. Then 
-\[L\vec{V}=\vec{b}\]
-We can solve the first $(c-1)$ rows of $\vec{V}$ while the last row of $\vec{V}$ remains unknown. Because $Q$ is orthogonal, $V(1),\cdots, V(c)$ are i.i.d. normal variables with the same distribution as $W(1),\cdots,W(c)$ have. Let
-\begin{align*}
-L=\left(L_1,\vec{0}\right)
-\end{align*}
-where $L_1$ is $(c-1)$ by $(c-1)$ invertible lower triangular matrix. Therefore,
-\[(V(1),\cdots,V(c-1))' = L_1^{-1}\vec{b}\]
-Since $V(c)$ is independent from $V(1),\cdots,V(c-1)$, $E[V(c)]=0$, $Cov(V(c))=\Sigma$.
-\begin{align*}
-& E[\|\hat{\theta}(c)-\theta_0\|^2|\hat{\theta}(1),\cdots,\hat{\theta}(c)]\\
-= & \frac{1}{c^2}E[\|\sum_{s=1}^{c} W(s)\|^2|\hat{\theta}(1),\cdots,\hat{\theta}(c)]\\
-= & \frac{1}{c^2}E[\|\sum_{s=1}^{c} V(s)\|^2|\hat{\theta}(1),\cdots,\hat{\theta}(c)]\\
-= & \frac{1}{c^2}\left(\|(1,1,\cdots,1)L_1^{-1}\vec{b}\|^2+tr(\Sigma)\right)
-\end{align*}
-In each cycle, we can compute $L_1^{-1}\vec{b}$. If $\|(1,1,\cdots,1)L_1^{-1}\vec{b}\|\leq\delta$, then  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%% Modifications 3 %%%%%%%%%%%%%%%%%%%%%%%%%%

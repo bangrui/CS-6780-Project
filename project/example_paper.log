@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.30)  6 MAY 2015 17:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.30)  7 MAY 2015 12:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -455,12 +455,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1}
                                                   \fi \fi 
 l.121 
       ]
-
-LaTeX Warning: Reference `alg:PEGE' on page 2 undefined on input line 131.
-
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 135.
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/local/texlive/2014/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
@@ -500,168 +497,118 @@ dfTeX warning (ext4): destination with the same identifier (name{equation.3.4})
 l.202 I
        n the $k$th step of an $r$-period exploration, we have the observation:]
 
-LaTeX Warning: Reference `alg:PEGE1' on page 3 undefined on input line 223.
+Underfull \hbox (badness 1895) in paragraph at lines 268--269
+[]\OT1/cmr/m/n/10 At $\OML/cmm/m/it/10 c$\OT1/cmr/m/n/10 th cy-cle, con-di-tion
+al on $\OML/cmm/m/it/10 Z\OT1/cmr/m/n/10 (1)\OML/cmm/m/it/10 ; []  ; Z\OT1/cmr/
+m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 )$ (we
+ []
 
 
-LaTeX Warning: Reference `TC:PEGE' on page 3 undefined on input line 238.
-
-
-LaTeX Warning: Reference `reg:PEGE' on page 3 undefined on input line 238.
-
-
-LaTeX Warning: Reference `alg:PEGE2' on page 3 undefined on input line 257.
+Underfull \hbox (badness 1127) in paragraph at lines 268--269
+\OT1/cmr/m/n/10 will use $\OML/cmm/m/it/10 Z\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 
+; []  ; c\OT1/cmr/m/n/10 )$ later), which are ob-serv-able,
+ []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 300--301
-[]\OT1/cmr/m/n/10 However, since we can not ob-serve
+Overfull \hbox (21.29198pt too wide) detected at line 312
+[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 ) = ([] \OT1/cmr/bx/n/10 b
+[]b[]\OT1/cmr/m/n/10 )[] [] \OML/cmm/m/it/10 w[] [] \OT1/cmr/bx/n/10 b[]\OML/cm
+m/m/it/10 Y[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 ) = \OML/cmm/m/
+it/10 ^^R[] \OT1/cmr/m/n/10 + [] \OML/cmm/m/it/10 w[]W\OT1/cmr/m/n/10 (\OML/cmm
+/m/it/10 s\OT1/cmr/m/n/10 )
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 300--301
-\OML/cmm/m/it/10 E []$ \OT1/cmr/m/n/10 dur-ing the for-ward-ing
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{equation.3.10
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.309 \end{align}
-                 
-Overfull \hbox (57.10132pt too wide) detected at line 358
-[] \OML/cmm/m/it/10 :
+Underfull \hbox (badness 1478) in paragraph at lines 312--314
+\OT1/cmr/m/n/10 as the es-ti-ma-tor of $\OML/cmm/m/it/10 ^^R[]$ \OT1/cmr/m/n/10
+ in the $\OML/cmm/m/it/10 c$\OT1/cmr/m/n/10 th cy-cle, where
  []
 
 [4]
-Underfull \vbox (badness 2452) has occurred while \output is active []
-
-
-Underfull \hbox (badness 6825) in paragraph at lines 424--427
-\OT1/cmr/m/n/10 In each cy-cle, we can com-pute $\OML/cmm/m/it/10 L[][]$\OT1/cm
-r/m/n/10 . If
- []
-
-
-LaTeX Warning: Reference `alg:PEGE3' on page 5 undefined on input line 430.
-
-
-LaTeX Warning: Reference `alg:PEGE2' on page 5 undefined on input line 446.
-
-
-LaTeX Warning: Reference `alg:PEGE2' on page 5 undefined on input line 446.
-
-
-LaTeX Warning: Reference `alg:PEGE3' on page 5 undefined on input line 446.
-
-[5]
-Underfull \hbox (badness 2443) in paragraph at lines 461--463
+Underfull \hbox (badness 2443) in paragraph at lines 391--393
 \OT1/cmr/m/n/10 Thus, $\OML/cmm/m/it/10 Trace\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 
 X[]X[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 X[]X[]\OT1/cmr/m/n/10 ) \OML/cmm/m/it
 /10 < Trace\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X[]X[]\OT1/cmr/m/n/10 )$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 461--463
+Underfull \hbox (badness 10000) in paragraph at lines 391--393
 \OT1/cmr/m/n/10 is equiv-a-lent to show $\OML/cmm/m/it/10 Trace\OT1/cmr/m/n/10 
 (\OML/cmm/m/it/10 A[]X[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 I \OT1/cmr/m/n/10 +
  []
 
 
-LaTeX Warning: Reference `alg:PEGE3' on page 6 undefined on input line 466.
-
-
-Underfull \hbox (badness 2809) in paragraph at lines 466--467
-[][]\OT1/cmr/bx/n/10 Theorem 9. []\OT1/cmr/m/it/10 The al-go-rithm $[]$ has bay
-es risk
- []
-
-
-LaTeX Warning: Reference `alg3' on page 6 undefined on input line 469.
-
-
-LaTeX Warning: Reference `alg3' on page 6 undefined on input line 469.
-
-
-Overfull \hbox (78.44316pt too wide) in paragraph at lines 483--490
+Overfull \hbox (78.44316pt too wide) in paragraph at lines 413--420
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 495--496
+Underfull \hbox (badness 10000) in paragraph at lines 425--426
 []\OT1/cmr/m/n/10 At step $\OML/cmm/m/it/10 t \OT1/cmr/m/n/10 + 1$, we have kno
 wl-edge
  []
 
 
-Overfull \hbox (23.56262pt too wide) in paragraph at lines 501--501
+Overfull \hbox (23.56262pt too wide) in paragraph at lines 431--431
 [] 
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 554--559
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 484--489
 \OT1/cmr/m/n/10 and then we will choose the arm $\OML/cmm/m/it/10 u[] \OT1/cmr/
 m/n/10 =
  []
 
 
-Overfull \hbox (2.56151pt too wide) in paragraph at lines 554--559
+Overfull \hbox (2.56151pt too wide) in paragraph at lines 484--489
 [][] []$
  []
 
-(./example_paper.bbl
-Underfull \vbox (badness 7685) has occurred while \output is active []
-
- [7])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 614.
-
-[8
+(./example_paper.bbl [6])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 544.
+ [7
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 614.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 544.
  (./example_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 614.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 614.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 544.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 544.
 Package rerunfilecheck Info: File `example_paper.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 614.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 544.
  ) 
 Here is how much of TeX's memory you used:
- 6989 strings out of 493117
- 99350 string characters out of 6135432
- 209991 words of memory out of 5000000
- 10292 multiletter control sequences out of 15000+600000
+ 6978 strings out of 493117
+ 99215 string characters out of 6135432
+ 210634 words of memory out of 5000000
+ 10286 multiletter control sequences out of 15000+600000
  10505 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,15n,45p,717b,474s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,15n,45p,717b,495s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
-</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
-usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><
-/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><
-/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
-usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb
-></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></
-usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></us
-r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
-local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/loc
-al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/
-texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
-exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/tex
-live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
-ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texliv
-e/2014/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/te
-xlive/2014/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on example_paper.pdf (8 pages, 259335 bytes).
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></u
+sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></u
+sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><
+/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
+local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
+cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local
+/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
+live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texli
+ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive
+/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/
+2014/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texl
+ive/2014/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on example_paper.pdf (7 pages, 260968 bytes).
 PDF statistics:
- 188 PDF objects out of 1000 (max. 8388607)
- 157 compressed objects within 2 object streams
- 64 named destinations out of 1000 (max. 500000)
+ 194 PDF objects out of 1000 (max. 8388607)
+ 163 compressed objects within 2 object streams
+ 59 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
