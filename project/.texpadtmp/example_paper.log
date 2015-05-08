@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.1.26)  7 MAY 2015 21:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.1.26)  8 MAY 2015 16:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -56,30 +56,18 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
 )
-(/usr/local/texlive/2013/texmf-dist/tex/latex/subfigure/subfigure.sty
-Package: subfigure 2002/03/15 v2.1.5 subfigure package
-\subfigtopskip=\skip43
-\subfigcapskip=\skip44
-\subfigcaptopadj=\dimen105
-\subfigbottomskip=\skip45
-\subfigcapmargin=\dimen106
-\subfiglabelskip=\skip46
+(./subfigure.sty
+Package: subfigure 1995/03/06 v2.0 subfigure package
+
+Package: subfigure 1995/03/06 v2.0
 \c@subfigure=\count88
 \c@lofdepth=\count89
 \c@subtable=\count90
 \c@lotdepth=\count91
-
-****************************************
-* Local config file subfigure.cfg used *
-****************************************
-(/usr/local/texlive/2013/texmf-dist/tex/latex/subfigure/subfigure.cfg)
-\subfig@top=\skip47
-\subfig@bottom=\skip48
-)
-(./natbib.sty
+) (./natbib.sty
 Package: natbib 2009/07/16 8.31 (PWD, AO)
-\bibhang=\skip49
-\bibsep=\skip50
+\bibhang=\skip43
+\bibsep=\skip44
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count92
 ) (./algorithm.sty
@@ -108,22 +96,22 @@ Document Style `algorithmic' - environment
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count95
 \calc@Bcount=\count96
-\calc@Adimen=\dimen107
-\calc@Bdimen=\dimen108
-\calc@Askip=\skip51
-\calc@Bskip=\skip52
+\calc@Adimen=\dimen105
+\calc@Bdimen=\dimen106
+\calc@Askip=\skip45
+\calc@Bskip=\skip46
 LaTeX Info: Redefining \setlength on input line 76.
 LaTeX Info: Redefining \addtolength on input line 77.
 \calc@Ccount=\count97
-\calc@Cskip=\skip53
+\calc@Cskip=\skip47
 )
 \c@ALC@line=\count98
 \c@ALC@rem=\count99
-\ALC@tlm=\skip54
+\ALC@tlm=\skip48
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
-\@mathmargin=\skip55
+\@mathmargin=\skip49
 
 For additional information on amsmath, use the `?' option.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -132,11 +120,11 @@ Package: amstext 2000/06/29 v2.01
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks18
-\ex@=\dimen109
+\ex@=\dimen107
 ))
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
-\pmbraise@=\dimen110
+\pmbraise@=\dimen108
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
@@ -153,7 +141,7 @@ LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
 \Mathstrutbox@=\box28
 \strutbox@=\box29
-\big@size=\dimen111
+\big@size=\dimen109
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \macc@depth=\count105
@@ -166,15 +154,15 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \column@=\count110
 \maxfields@=\count111
 \andhelp@=\toks20
-\eqnshift@=\dimen112
-\alignsep@=\dimen113
-\tagshift@=\dimen114
-\tagwidth@=\dimen115
-\totwidth@=\dimen116
-\lineht@=\dimen117
+\eqnshift@=\dimen110
+\alignsep@=\dimen111
+\tagshift@=\dimen112
+\tagwidth@=\dimen113
+\totwidth@=\dimen114
+\lineht@=\dimen115
 \@envbody=\toks21
-\multlinegap=\skip56
-\multlinetaggap=\skip57
+\multlinegap=\skip50
+\multlinetaggap=\skip51
 \mathdisplay@stack=\toks22
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
@@ -193,9 +181,9 @@ Package: amsthm 2004/08/06 v2.20
 \thm@headfont=\toks25
 \thm@notefont=\toks26
 \thm@headpunct=\toks27
-\thm@preskip=\skip58
-\thm@postskip=\skip59
-\thm@headsep=\skip60
+\thm@preskip=\skip52
+\thm@postskip=\skip53
+\thm@headsep=\skip54
 \dth@everypar=\toks28
 )
 \c@theorem=\count112
@@ -259,7 +247,7 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 (/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
-\@linkdim=\dimen118
+\@linkdim=\dimen116
 \Hy@linkcounter=\count115
 \Hy@pagecounter=\count116
 
@@ -285,10 +273,10 @@ Package hyperref Info: Bookmarks ON on input line 4688.
 Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen119
+\XeTeXLinkMargin=\dimen117
 \Fld@menulength=\count119
-\Field@Width=\dimen120
-\Fld@charsize=\dimen121
+\Field@Width=\dimen118
+\Fld@charsize=\dimen119
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -315,20 +303,20 @@ Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip61
+\Hy@SectionHShift=\skip55
 )
 (./icml2012.sty
 Package: icml2012 2012/01/01 v2.0 ICML Conference Style File
  (./fancyhdr.sty
-\fancy@headwidth=\skip62
-\f@ncyO@elh=\skip63
-\f@ncyO@erh=\skip64
-\f@ncyO@olh=\skip65
-\f@ncyO@orh=\skip66
-\f@ncyO@elf=\skip67
-\f@ncyO@erf=\skip68
-\f@ncyO@olf=\skip69
-\f@ncyO@orf=\skip70
+\fancy@headwidth=\skip56
+\f@ncyO@elh=\skip57
+\f@ncyO@erh=\skip58
+\f@ncyO@olh=\skip59
+\f@ncyO@orh=\skip60
+\f@ncyO@elf=\skip61
+\f@ncyO@erf=\skip62
+\f@ncyO@olf=\skip63
+\f@ncyO@orf=\skip64
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
@@ -344,12 +332,12 @@ Package: eso-pic 2010/10/06 v2.0c eso-pic (RN)
 Package hyperref Info: Option `colorlinks' set `true' on input line 90.
 \titrun=\box30
 \captionbox=\box31
-\captionboxwid=\dimen122
+\captionboxwid=\dimen120
 \icmlrulerbox=\box32
 \icmlrulercount=\count125
-\icmlruleroffset=\dimen123
-\cv@lineheight=\dimen124
-\cv@boxheight=\dimen125
+\icmlruleroffset=\dimen121
+\cv@lineheight=\dimen122
+\cv@boxheight=\dimen123
 \cv@tmpbox=\box33
 \cv@refno=\count126
 \cv@tot=\count127
@@ -378,13 +366,13 @@ LaTeX Font Info:    ... okay on input line 58.
 (/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count130
-\scratchdimen=\dimen126
+\scratchdimen=\dimen124
 \scratchbox=\box34
 \nofMPsegments=\count131
 \nofMParguments=\count132
 \everyMPshowfont=\toks29
 \MPscratchCnt=\count133
-\MPscratchDim=\dimen127
+\MPscratchDim=\dimen125
 \MPnumerator=\count134
 \makeMPintoPDFobject=\count135
 \everyMPtoPDFconversion=\toks30
@@ -425,120 +413,75 @@ adtmp/example_paper.out)
 \@outlinefile=\write3
 \openout3 = `example_paper.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 81.
+LaTeX Font Info:    Try loading font information for U+msa on input line 78.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 81.
+LaTeX Font Info:    Try loading font information for U+msb on input line 78.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 2393) in paragraph at lines 83--84
-\OT1/cmr/m/n/10 the de-pen-dent case. In $([][][][][]\OML/cmm/m/it/10 ; [][] \O
-T1/cmr/m/n/10 2012[][])$
+Overfull \hbox (5.1225pt too wide) in paragraph at lines 78--78
+ [] 
  []
 
 
-Underfull \hbox (badness 6542) in paragraph at lines 83--84
-\OT1/cmr/m/n/10 and $([][][][][]\OML/cmm/m/it/10 ; [][] \OT1/cmr/m/n/10 2004[][
-])$, they stud-ied
+Underfull \hbox (badness 4132) in paragraph at lines 79--80
+\OT1/cmr/m/n/10 ban-dits prob-lem, where the re-ward of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--84
-\OT1/cmr/m/n/10 the multi-bandit prob-lem with side in-for-ma-
+Underfull \hbox (badness 2351) in paragraph at lines 79--80
+\OT1/cmr/m/n/10 each arm lin-early de-pends on a multi-
  []
 
 
-Underfull \hbox (badness 4913) in paragraph at lines 83--84
-\OT1/cmr/m/n/10 tion. In $([][][][][]\OML/cmm/m/it/10 ; [][] \OT1/cmr/m/n/10 20
-09[][])$ and
- []
+Package amsfonts Warning: Obsolete command \bold; \mathbf should be used instea
+d on input line 98.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [1{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
-Package amsfonts Warning: Obsolete command \bold; \mathbf should be used instea
-d on input line 94.
 
-
-Overfull \hbox (6.2094pt too wide) detected at line 112
+]
+Overfull \hbox (6.2094pt too wide) detected at line 116
 [][]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]; T; ^^Y\OT1/cmr/m/n/10 ) = [] \OML/
 cmm/m/it/10 E [] :
  []
 
-[1{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1}
-) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.112 \end{equation}
-                    ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 135.
-
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 139.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 135.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 139.
 
-Underfull \hbox (badness 1783) in paragraph at lines 139--142
+Underfull \hbox (badness 1783) in paragraph at lines 143--146
 \OT1/cmr/m/it/10 and the set of arms $\OMS/cmsy/m/n/10 U[] ^^Z \U/msb/m/n/10 R[
 ]$ \OT1/cmr/m/it/10 has r lin-
  []
 
-[2pdfTeX warning (ext4): destination with the same identifier (name{equation.3.
-4}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.202 I
-       n the $k$th step of an $r$-period exploration, we have the observation:p
-dfTeX warning (ext4): destination with the same identifier (name{equation.3.4})
- has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.202 I
-       n the $k$th step of an $r$-period exploration, we have the observation:p
-dfTeX warning (ext4): destination with the same identifier (name{equation.3.4})
- has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.202 I
-       n the $k$th step of an $r$-period exploration, we have the observation:p
-dfTeX warning (ext4): destination with the same identifier (name{equation.3.4})
- has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.202 I
-       n the $k$th step of an $r$-period exploration, we have the observation:]
-
-Underfull \hbox (badness 1895) in paragraph at lines 268--269
+[2]
+Underfull \hbox (badness 1895) in paragraph at lines 271--272
 []\OT1/cmr/m/n/10 At $\OML/cmm/m/it/10 c$\OT1/cmr/m/n/10 th cy-cle, con-di-tion
 al on $\OML/cmm/m/it/10 Z\OT1/cmr/m/n/10 (1)\OML/cmm/m/it/10 ; []  ; Z\OT1/cmr/
 m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 )$ (we
  []
 
 
-Underfull \hbox (badness 1127) in paragraph at lines 268--269
+Underfull \hbox (badness 1127) in paragraph at lines 271--272
 \OT1/cmr/m/n/10 will use $\OML/cmm/m/it/10 Z\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 
 ; []  ; c\OT1/cmr/m/n/10 )$ later), which are ob-serv-able,
  []
 
 [3]
-Overfull \hbox (21.29198pt too wide) detected at line 312
+Overfull \hbox (21.29198pt too wide) detected at line 315
 []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 ) = ([] \OT1/cmr/bx/n/10 b
 []b[]\OT1/cmr/m/n/10 )[] [] \OML/cmm/m/it/10 w[] [] \OT1/cmr/bx/n/10 b[]\OML/cm
 m/m/it/10 Y[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 ) = \OML/cmm/m/
@@ -547,85 +490,88 @@ it/10 ^^R[] \OT1/cmr/m/n/10 + [] \OML/cmm/m/it/10 w[]W\OT1/cmr/m/n/10 (\OML/cmm
  []
 
 
-Underfull \hbox (badness 1478) in paragraph at lines 312--314
+Underfull \hbox (badness 1478) in paragraph at lines 315--317
 \OT1/cmr/m/n/10 as the es-ti-ma-tor of $\OML/cmm/m/it/10 ^^R[]$ \OT1/cmr/m/n/10
  in the $\OML/cmm/m/it/10 c$\OT1/cmr/m/n/10 th cy-cle, where
  []
 
 [4]
-Underfull \hbox (badness 2443) in paragraph at lines 391--393
+Underfull \hbox (badness 2443) in paragraph at lines 394--396
 \OT1/cmr/m/n/10 Thus, $\OML/cmm/m/it/10 Trace\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 
 X[]X[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 X[]X[]\OT1/cmr/m/n/10 ) \OML/cmm/m/it
 /10 < Trace\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X[]X[]\OT1/cmr/m/n/10 )$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 391--393
+Underfull \hbox (badness 10000) in paragraph at lines 394--396
 \OT1/cmr/m/n/10 is equiv-a-lent to show $\OML/cmm/m/it/10 Trace\OT1/cmr/m/n/10 
 (\OML/cmm/m/it/10 A[]X[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 I \OT1/cmr/m/n/10 +
  []
 
-
-Overfull \hbox (78.44316pt too wide) in paragraph at lines 413--420
- [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 425--426
-[]\OT1/cmr/m/n/10 At step $\OML/cmm/m/it/10 t \OT1/cmr/m/n/10 + 1$, we have kno
-wl-edge
- []
-
-
-Overfull \hbox (23.56262pt too wide) in paragraph at lines 431--431
-[] 
- []
-
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 484--489
+Underfull \hbox (badness 10000) in paragraph at lines 452--457
 \OT1/cmr/m/n/10 and then we will choose the arm $\OML/cmm/m/it/10 u[] \OT1/cmr/
 m/n/10 =
  []
 
 
-Overfull \hbox (2.56151pt too wide) in paragraph at lines 484--489
+Overfull \hbox (2.56151pt too wide) in paragraph at lines 452--457
 [][] []$
  []
 
+<plot11.png, id=119, 578.16pt x 433.62pt>
+File: plot11.png Graphic file (type png)
+ <use plot11.png>
+Package pdftex.def Info: plot11.png used on input line 511.
+(pdftex.def)             Requested size: 243.91124pt x 182.93298pt.
 
-Package natbib Warning: Citation `langley00' undefined on input line 528.
+Overfull \hbox (9.03374pt too wide) in paragraph at lines 511--512
+ [][] 
+ []
+
+<UCB1.png, id=121, 578.16pt x 433.62pt>
+File: UCB1.png Graphic file (type png)
+ <use UCB1.png>
+Package pdftex.def Info: UCB1.png used on input line 519.
+(pdftex.def)             Requested size: 243.91124pt x 182.93298pt.
+
+Overfull \hbox (9.03374pt too wide) in paragraph at lines 519--520
+ [][] 
+ []
+
+[6]
+
+Package natbib Warning: Citation `langley00' undefined on input line 531.
 
 
 (/Users/apple/Desktop/Cornell/2015 Spring/CS 6780/CS-6780-Project/project/.texp
 adtmp/example_paper.bbl
-Underfull \vbox (badness 2384) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6])
+)
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 544.
-[7
-
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 544.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 547.
+[7 <./plot11.png> <./UCB1.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 547.
 
 (/Users/apple/Desktop/Cornell/2015 Spring/CS 6780/CS-6780-Project/project/.texp
 adtmp/example_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 544.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 544.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 547.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 547.
 Package rerunfilecheck Info: File `example_paper.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 544.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 547.
  ) 
 Here is how much of TeX's memory you used:
- 6983 strings out of 493315
- 100218 string characters out of 6137904
- 209729 words of memory out of 5000000
- 10279 multiletter control sequences out of 15000+600000
- 10505 words of font info for 38 fonts, out of 8000000 for 9000
+ 6949 strings out of 493315
+ 99419 string characters out of 6137904
+ 211645 words of memory out of 5000000
+ 10233 multiletter control sequences out of 15000+600000
+ 14354 words of font info for 52 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 29i,15n,45p,817b,495s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,15n,45p,1023b,500s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></
@@ -636,21 +582,25 @@ sr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
 r/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><
 /usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
 usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
-r/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
-local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
-cal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local
-/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/te
-xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
-live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texli
-ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive
-/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/
-2013/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texl
-ive/2013/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+r/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
+local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/lo
+cal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loca
+l/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/t
+exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texl
+ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive
+/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl9.pfb></usr/local/texlive/2
+013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/20
+13/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2013
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2013/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2013/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2013/texm
+f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2013/
+texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
 Output written on "/Users/apple/Desktop/Cornell/2015 Spring/CS 6780/CS-6780-Pro
-ject/project/.texpadtmp/example_paper.pdf" (7 pages, 261992 bytes).
+ject/project/.texpadtmp/example_paper.pdf" (7 pages, 344501 bytes).
 PDF statistics:
- 212 PDF objects out of 1000 (max. 8388607)
- 181 compressed objects within 2 object streams
- 59 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 241 PDF objects out of 1000 (max. 8388607)
+ 201 compressed objects within 3 object streams
+ 63 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
