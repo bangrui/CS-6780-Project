@@ -75,14 +75,18 @@
 \vskip 0.3in
 ]
 
+\begin{abstract} 
+In this paper, we studied the multi-armed bandits problem, where the reward of each arm linearly depends on a multi-variate random variable. We provided three heuristic algorithms based on PEGE algorithm $\cite{Paat}$. We proved all of these algorithms reaches the optimal Bayes regret bound $O(r\sqrt{T})$, where r is the dimension of the multivariate random variable. Numerical experiments suggest our new algorithms outperformed the PEGE algorithm as well as the EXP3 algorithm. 
+\end{abstract} 
+
 
 \section{Introduction}
 
-Exploration vs Exploitation has been studied extensively under the framework of multi-armed bandits problem. The multi-armed bandits problem was first studied by Robbins \cite{Robbins}. The problem is trying to find the optimal policy so that we can pull arms sequentially while maximizing the total expected reward. For the case each arm is independent, the Gittins Index \cite{Gittins} provides an optimal policy for maximizing the expected reward. Further, Lai and Robbins \cite{Lai} proved the regret under an arbitrary policy increases linearly with number of arms. Most policies that assume independence require each arm to be tried at least once, which are impractical in settings involving many or infinite arms. 
+Exploration vs. Exploitation has been studied extensively under the framework of multi-armed bandits problem. The multi-armed bandits problem was first studied by Robbins \cite{Robbins}. The problem is trying to find the optimal policy so that we can pull arms sequentially while maximizing the total expected reward. For the case each arm is independent, the Gittins Index \cite{Gittins} provides an optimal policy for maximizing the expected reward. Further, Lai and Robbins \cite{Lai} proved the regret under an arbitrary policy increases linearly with number of arms. Most policies that assume independence require each arm to be tried at least once, which are impractical in settings involving many or infinite arms. 
 
-Since then, a lot of research has been focused on the dependent case. In \cite{Gabor} and \cite{Chih-Chun}, they studied the multi-bandit problem with side information. In \cite{Yasin1} and \cite{Yasin2}, people consider the reward for each bandit is the inner product between an single unknown parameter and the bandit. In \cite{Paat}, they modeled the expected reward of each arm linearly depends on a multivariate random variable. Furthermore in that paper, they showed that under arbitrary policy, the Bayes regret is $O(r\sqrt{T})$ where r is the dimensional of the multivariate random variable. They also provided an simple algorithm that reaches the $O(r\sqrt{T})$ regret bound.
+Since then, a lot of research has been focused on the dependent case. In \cite{Gabor} and \cite{Chih-Chun}, they studied the multi-bandit problem with side information. In \cite{Yasin1} and \cite{Yasin2}, people consider the reward for each bandit is the inner product between an single unknown parameter and the bandit. In \cite{Paat}, they modeled the expected reward of each arm linearly depends on a multivariate random variable. Furthermore in that paper, they showed that under arbitrary policy, the Bayes regret is $O(r\sqrt{T})$ where r is the dimensional of the multivariate random variable. They also provided an simple Phased Exploration Greedy Exploitation (PEGE) algorithm that reaches the $O(r\sqrt{T})$ regret bound.
 
-Through PEGE has the optimal regret bound, it doesn't do well in practice. In this project, we modified the PEGE algorithm and proved the modified algorithms are still optimal in the sense their Bayes regret is still $O(r\sqrt{T})$. We perform numerical experiments using the Yelp academic data to compare our modified algorithms as well as the original PEGE algorithm. The results suggest our modified algorithm are much better. Further, we compare our modified algorithms with UCB and Exponential Gradient algorithm. 
+Through PEGE has the optimal regret bound, it doesn't perform well in practice. In this project, we modified the PEGE algorithm and proved the modified algorithms are still optimal in the sense their Bayes regret is still $O(r\sqrt{T})$. We perform numerical experiments using the Yelp academic data to compare our modified algorithms as well as the original PEGE algorithm. The results suggest our modified algorithm are much better. Further, we compare our modified algorithms with UCB and Exponential Gradient algorithm. Although UCB algorithm outperformed our new algorithms, it requires previous knowledge about the multivariate random variable, which is impossible for the ``cold start" problems. Our newly modified performed better than other algorithms and doesn't require any previous knowledge.
 
 There are lots of application for this problem. For instance, a newly registered user for a website with no background information will typically face a cold start problem. Same thing would happen to a investment company who wants to invest money into emerging industries. Furthermore, this problem is closely related to the recommender systems, which are a subclass of information filtering system that seek to predict the ``rating" or ``preference" that user would give to an item. In these applications, one natural question would be how can we quickly learn user's preference from their feedback? All of these problems can be modeled as a multi-armed bandit problem and our heuristic policies can be applied.
 
@@ -117,9 +121,9 @@ where the cumulative regret is defined as the following:
 
 \section{PEGE}
 
-We are interested in the multi armed bandits problem with correlated arms. Theoretically this problem can be solved using dynamic programming, however it usually suffers from the curse of dimensionality when the dimension of the arm is high. Thus, it is desirable to develop some computational feasible heuristic algorithms.
+Theoretically this problem can be solved using stochastic dynamic programming, however it usually suffers from the curse of dimensionality when the dimension of the arm, i.e r is large. Thus, it is desirable to develop some computational feasible heuristic algorithms.
 
-In \cite{Paat}, they proved the following theorem which gives a lower bound for the bayes risk:
+In \cite{Paat}, they proved the following theorem which gives a lower bound for the Bayes risk:
 
 \begin{theorem}(Lower Bound)
 Consider a bandit problem where the set of arms is the unit sphere in $\mathbb{R}^{r}$, and $\epsilon_{t}$ has a standard normal distribution with mean 0 and variance one for all t and $X_{t}$. If $\theta$ has a multivariate normal distribution with mean $\bold{0}$ and covariance matrix $\bold{I}_{r}/r$, then for all policies $\pi$ and every $T\geq r^{2}$,
@@ -128,14 +132,14 @@ Consider a bandit problem where the set of arms is the unit sphere in $\mathbb{R
 \end{equation}
 \end{theorem}
 
-In their paper, they also provided a simple algorithm called Phased Exploration and Greedy Exploitation (PEGE) (Algorithm \ref{alg:PEGE}) that reaches the corresponding lower bound, i.e the bayes risk for PEGE is $O(r\sqrt{T})$. In order for the algorithm to work, it requires the following two assumptions:
+In their paper, they also provided a simple algorithm called Phased Exploration and Greedy Exploitation (PEGE) (Algorithm 1) that reaches the corresponding lower bound, i.e the bayes risk for PEGE is $O(r\sqrt{T})$. In order for the algorithm to work, it requires the following two assumptions:
 
 \begin{assumption}
 \begin{itemize}
 \item There exists a positive constant $\sigma_{0}$ such that for any $r\geq 2$, $\textbf{u}\in \mathcal{U}_{r}$, $t\geq 1$ and $x\in \mathbb{R}$, we have $E[e^{x \epsilon_{t}}]\leq e^{\frac{x^{2}\sigma_{0}^{2}}{2}}$.
 \item There exists positive constants $\bar{u}$ and $\lambda_{0}$ such that for any $r\geq 2$,
 \begin{equation}
-\max_{u\in \mathbb{U}^{r}}\|\textbf{u}\|\leq \bar{u} \nonumber
+\max_{u\in \mathbb{U}^{r}}\|\textbf{u}\|\leq \bar{u}, \nonumber
 \end{equation}
 and the set of arms $\mathcal{U}_{r}\subset 
 \mathbb{R}^{r}$ has r linearly independent elements $\textbf{b}_{1},\cdots,\textbf{b}_{r}$ such that $\lambda_{\min}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})\geq \lambda_{0}$.
@@ -173,16 +177,16 @@ Under these two conditions, the Bayes risk for the PEGE algorithm is at most $O(
 \begin{theorem}
 Suppose that assumption 1 holds and that the set $\mathcal{U}_{r}$ satisfy the SBAR(J) condition. In addition, there exists a constant $M>0$ such that for every $r\geq 2$ we have $E[\|\theta\|]\leq M$ and $E[1/\|Z\|]\leq M$. Then, there exist a positive constant $a_{1}$ that depends only on $\sigma_{0}$, $\bar{u}$, $\lambda_{0}$, J and M, such that for any $T\geq r$,
 \begin{equation}
-Risk(T,PEGE)\leq a_{1}r\sqrt{T} \nonumber 
+Risk(T,PEGE)\leq a_{1}r\sqrt{T}. \nonumber 
 \end{equation}
 
 \end{theorem}
 
-The proof of the theorem is you calculate the bayes risk for the exploitation and exploration periods respectively and add them together. In order to prove the above mentioned theorem, it requires the following two lemmas:
+The proof of the theorem is that calculate the Bayes risk for the exploitation and exploration periods respectively and add them together. In order to prove the above mentioned theorem, it requires the following two lemmas:
 \begin{lemma}
 Under Assumption 1, there exists a positive constant $h_{1}$ that depends only on $\sigma_{0}$, $\bar{u}$ and $\lambda_{0}$ such that for any $\textbf{z}\in \mathbb{R}^{r}$ and $c\geq 1$,
 \begin{equation}
-E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq \frac{h_{1}r}{c} 
+E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq \frac{h_{1}r}{c}. 
 \end{equation} 
 \end{lemma}
 
@@ -191,7 +195,7 @@ Suppose that Assumption 1 holds and the set $\mathbb{U}_{r}$ satisfy the SBAR(J)
 \begin{align}
 &E \left[ \max_{\textbf{u}\in \mathcal{U}_{r}} \theta_{0}^{'}(\textbf{u}-\textbf{G}(c))|\theta=\theta_{0}\right] \nonumber \\
 \leq & \frac{2}{\|\theta_0\|}E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq
-\frac{2h_{1}r}{c\|\theta_{0}\|} =\frac{h_2r}{c\|\theta_0\|}
+\frac{2h_{1}r}{c\|\theta_{0}\|} =\frac{h_2r}{c\|\theta_0\|}.
 \end{align}
 \end{lemma}
 
@@ -211,16 +215,16 @@ Thus, $C\leq \sqrt{2T}$.
 \begin{align}
 &\text{Regret}(\theta_0, T, PEGE)\leq  \sum_{c=1}^{C}\left[2\bar{u}\|\theta_0\| \cdot r + \frac{rh_2}{c\|\theta_0\|}\cdot c\right] \nonumber\\
 = & (2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})rC
-<  \sqrt{2}(2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})r\sqrt{T} \label{reg:PEGE}
+<  \sqrt{2}(2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})r\sqrt{T}. \label{reg:PEGE}
 \end{align}
 
-Although the PEGE algorithm reaches the theoretical bayes risk lower bound, it doesn't perform well in practice. Thus, we proposed the following three modified PEGE algorithms, which still have $O(r\sqrt{T})$ bayes risk, but with a smaller coefficient.
+Although PEGE algorithm reaches the theoretical Bayes risk lower bound, it doesn't perform well in practice. Thus, we proposed the following three modified PEGE algorithms, which still have $O(r\sqrt{T})$ bayes risk, but performs better in practice.
 % with a smaller constant?
 
 %%%%%%%%%%%%%%%%%%%%%% Modifications 1 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{modification}
-In the first modified algorithm, instead of doing c periods of exploitation in cycle c, we now do kc periods of exploitation, where k is a constant (Algorithm \ref{alg:PEGE1}).
+In the first modified algorithm, instead of doing c periods of exploitation in cycle c, we now do kc periods of exploitation, where k is a constant (Algorithm 2).
 \begin{algorithm}\label{alg:PEGE1}
 \caption{PEGE Modified 1}
 \textbf{Description}: For each cycle $c\geq 1$, complete the following two phases:
@@ -254,7 +258,6 @@ However, since we do not know $\|\theta_0\|$ in advance, we need to estimate it 
 %%%%%%%%%%%%%%%%%%%%%% Modifications 2 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{modification}
-Are you kidding me?
 
 
 
@@ -373,7 +376,7 @@ where for any k, $Y^{b_{k}}(s)$, and $\epsilon^{b_{k}(s)}$ denote the observed r
 \end{itemize}
 \end{algorithm}
 \paragraph{Regret of Modification 3:}
-Since during the exploration periods, it will play the same arms as in algorithm $\ref{alg:PEGE2}$, we just need to show the regret during the exploitation periods is smaller than the regret of algorithm $\ref{alg:PEGE2}$. If we denote $\hat{\theta}(c,t)$ as the OLS estimator of $\theta$ during the $t_{th}$ exploitation period in the $c_{th}$ cycle, then to show algorithm $\ref{alg:PEGE3}$ has smaller regret during exploitation is equivalent to show 
+Since during the exploration periods, it will play the same arms as in algorithm 3, we just need to show the regret during the exploitation periods is smaller than the regret of algorithm 3. If we denote $\hat{\theta}(c,t)$ as the OLS estimator of $\theta$ during the $t_{th}$ exploitation period in the $c_{th}$ cycle, then to show algorithm 4 has smaller regret during exploitation is equivalent to show 
 \begin{align}
 E[\|\hat{\theta}(c,t)-\theta_{0}\|^{2}|\theta=\theta_{0}] < E[|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}]. \label{alg3}
 \end{align}
@@ -393,7 +396,7 @@ Thus, $Trace(X_{1}^{T}X_{1}+X_{2}^{T}X_{2}) < Trace(X_{1}^{T}X_{1})$ is equivale
 \end{proof}
 
 \begin{theorem}
-The algorithm $\ref{alg:PEGE3}$ has bayes risk $O(r\sqrt{T})$.
+The algorithm 4 has bayes risk $O(r\sqrt{T})$.
 \end{theorem}
 \begin{proof}
 As we discussed before, we just need to show $(\ref{alg3})$ holds true. Since we assume $\epsilon\sim N(0,\sigma^{2})$, thus the OLS estimator $\hat{\beta}$ of $Y=X\beta+\epsilon$ follows a normal distribution $\hat{\beta}\sim N(\beta,\sigma^{2}(X^{T}X)^{-1})$. Thus $E[\|\hat{\beta}-\beta\|^{2}]=\sigma^{2}Trace(X^{T}X)^{-1}$. If we denote $X(c,t)$ is the X vector for the $\hat{\theta(c,t)}$ and $X(c)$ is the X vector for the $\hat{\theta(c)}$, then $X(c,t)$ contains more rows than $X(c)$. Based on our previous lemma, we know $(\ref{alg3})$ holds true.
@@ -404,45 +407,10 @@ As we discussed before, we just need to show $(\ref{alg3})$ holds true. Since we
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Heuristic Algorithms}
-There are two well known algorithms for this problem, which are Exponential Gradient algorithm and the upper confidence bound algorithm.\
+\section{UCB and EXP3}
+Besides the PEGE algorithm, there are two other well known algorithms for this problem, which are Exponential Gradient algorithm and the upper confidence bound algorithm. These are two different types of algorithms, UCB requires previous information about $\theta$ which is impossible for the ``cold start" problems. However, due to the previous information, it usually performs very well in most cases. EXP3 is a randomized algorithm and doesn't require any previous information. However, when the number of arms are large, it usually doesn't perform very well.
 
-\textbf{Notations: }
 
-\begin{center}
-\begin{tabular}{ll}
-${x}_i$: & feature of the recommended restaurant at step $i$, binary vector\\
-$y_i$: & rate given by the user at step $i$, range is $(0,5)$\\
-${\theta}$: & user's preference\\
-${\mu_0}$: & prior knowledge of ${E}[{\theta}]$ \\
-$\Sigma_0$: & prior knowledge of Cov$(\theta)$
-\end{tabular}
-\end{center}
-
-At each step, we assume the user's rating $y_i = \theta\cdot {x}_i+\epsilon$, where $\epsilon\sim\mathcal{N}(0,\sigma^2)$.
-
-\subsection{Upper Confidence Bound}
-At step $t+1$, we have knowledge $\mu_0,\ \Sigma_0,\ ({x}_1, y_1), \cdots, ({x}_{t}, y_t)$. The distribution 
-\[\theta | [ \mu_0,\ \Sigma_0,\ ({x}_1, y_1), \cdots, ({x}_{t}, y_t) ] \sim \mathcal{N}(\mu_{t}, \Sigma_{t}) \]
-where 
-\begin{align}
-\Sigma_{t}^{-1} = & \Sigma_0^{-1}+\frac{1}{\sigma^2}X_t^TX_t &=& \Sigma_t^{-1} + \frac{1}{\sigma^2}{x}_t{x}_t^T\\
-\mu_t = & \Sigma_t\left( \Sigma_0^{-1}\mu_0 + \frac{1}{\sigma^2}X_t^Ty \right) &= &\Sigma_t\left(\Sigma_{t-1}\mu_{t-1}+\frac{1}{\sigma^2}{x}_t y_t\right)
-\end{align}
-where 
-\begin{align*}
-X_t = \left(
-\begin{array}{c}
-{x}_1^T\\
-\vdots\\
-{x}_t^T
-\end{array}\right)
-\end{align*}
-
-Then, for each restaurant $r$, we suppose its feature vector is ${x}^{(r)}$. And its expected rating and variance are
-\[E[{x}^{(r)}\cdot \theta] = {x}^{(r)}\cdot \mu_t,\quad Var({x}^{(r)}\cdot \theta) =({x}^{(r)})^T\Sigma_t {x}^{(r)} \]
-The restaurant we will recommend at step $t+1$ is
-\[r_t = \arg\max_r E[{x}^{(r)}\cdot \theta] + 1.96 \sqrt{Var({x}^{(r)}\cdot \theta)}\]
 
 \subsection{Upper Confidence Bound Algorithms}
 
@@ -515,7 +483,7 @@ weights may be zero in most of the cases.
 \section{Numerical Experiment}
 In this simulation, we use the yelp academic dataset. The goal of this simulation is to find the favorite restaurant categories for a new user. There are 4596 restaurants in the dataset and each restaurant belongs to one or multiple categories. We first find the top twenty categories that has most restaurants, which are Pizza, Sandwiches, Food etc, and use those 20 categories as our feature. For each restaurant, if it belongs to certain category, then the corresponding element of its feature vector is 1 and 0 otherwise. So the feature vector of each restaurant is a 20 dimensional binary vector. 
 
-For each user, we calculated his user preference vector based on his rating and the restaurants' feature vectors that he rated using ridge regression (since there are not too many ratings, ordinary linear regression doesn't work here due to singularity). Then we calculated the sample mean and the sample variance of all users' preference vector and denote them as $(\mu,\Sigma)$. We further assume that for each user's preference vector $\theta\sim N(\mu,\Sigma)$ and generate new user from this distribution.
+For each historical user, we calculated his user preference vector based on his rating and the restaurants' feature vectors that he rated using ridge regression (since there are not too many ratings, ordinary linear regression doesn't work here due to singularity). Then we calculated the sample mean and the sample variance of all users' preference vector and denote them as $(\mu,\Sigma)$. We further assume that for each user's preference vector $\theta\sim N(\mu,\Sigma)$ and generate new user from this distribution.
 
 In our numerial examples, the reward function when the restaurant
 $i$ is choosen is defined as 
@@ -555,10 +523,9 @@ than the performance of EXP3 algorithm.
 
 
 
-\section{Possible Applications}
+\section{Conclusion}
 
-Recommender systems want to find the preference that a user would give to a subset of a finite set of items. They're widely applied to different problems. For example, they're used in Netflix where there are thousands of movies and TV episodes. The biggest challenge of these problems is that there are millions of objets and hundreds of million of users, and so it's necessary to find a model that performs well and be sufficiently fast.
-
+In this paper, we studied the linearly parameterized bandits problem, where the reward of each arm linearly depends on a multivariate random variable. In $\cite{Paat}$, it provided an simple algorithm PEGE which reaches the optimal Bayes regret bound $O(r\sqrt{T})$. However, the PEGE algorithm doesn't perform well in practice, since it does the same number of exploitation steps regardless the exploration result. We provided three new PEGE algorithms which choose the number of exploitation in each cycle based on the exploration results and proved the modified algorithms still have the optimal Bayes regret. Further, we compared our modified algorithms with PEGE as well as UCB and EXP using the Yelp academic dataset. Though UCB performs the best (almost optimal) among these algorithms, it requires a lot of previous information. Our new algorithms which outperformed the PEGE and EXP3 don't depend on the previous information and could be applied to the ``cold start" problems.
 
 
 \nocite{langley00}
