@@ -78,9 +78,9 @@
 
 \section{Introduction}
 
-Exploration vs Exploitation has been studied extensively under the framework of multi-armed bandits problem. The multi-armed bandits problem was first studied by Robbins $\cite{Robbins}$. The problem is trying to find the optimal policy so that we can pull arms sequentially while maximizing the total expected reward. For the case each arm is independent, the Gittins Index $\cite{Gittins}$ provides an optimal policy for maximizing the expected reward. Further, Lai and Robbins $\cite{Lai}$ proved the regret under an arbitrary policy increases linearly with number of arms. Most policies that assume independence require each arm to be tried at least once, which are impractical in settings involving many or infinite arms. 
+Exploration vs Exploitation has been studied extensively under the framework of multi-armed bandits problem. The multi-armed bandits problem was first studied by Robbins \cite{Robbins}. The problem is trying to find the optimal policy so that we can pull arms sequentially while maximizing the total expected reward. For the case each arm is independent, the Gittins Index \cite{Gittins} provides an optimal policy for maximizing the expected reward. Further, Lai and Robbins \cite{Lai} proved the regret under an arbitrary policy increases linearly with number of arms. Most policies that assume independence require each arm to be tried at least once, which are impractical in settings involving many or infinite arms. 
 
-Since then, a lot of research has been focused on the dependent case. In $\cite{Gabor}$ and $\cite{Chih-Chun}$, they studied the multi-bandit problem with side information. In $\cite{Yasin1}$ and $\cite{Yasin2}$, people consider the reward for each bandit is the inner product between an single unknown parameter and the bandit. In $\cite{Paat}$, they modeled the expected reward of each arm linearly depends on a multivariate random variable. Furthermore in that paper, they showed that under arbitrary policy, the Bayes regret is $O(r\sqrt{T})$ where r is the dimensional of the multivariate random variable. They also provided an simple algorithm that reaches the $O(r\sqrt{T})$ regret bound.
+Since then, a lot of research has been focused on the dependent case. In \cite{Gabor} and \cite{Chih-Chun}, they studied the multi-bandit problem with side information. In \cite{Yasin1} and \cite{Yasin2}, people consider the reward for each bandit is the inner product between an single unknown parameter and the bandit. In \cite{Paat}, they modeled the expected reward of each arm linearly depends on a multivariate random variable. Furthermore in that paper, they showed that under arbitrary policy, the Bayes regret is $O(r\sqrt{T})$ where r is the dimensional of the multivariate random variable. They also provided an simple algorithm that reaches the $O(r\sqrt{T})$ regret bound.
 
 Through PEGE has the optimal regret bound, it doesn't do well in practice. In this project, we modified the PEGE algorithm and proved the modified algorithms are still optimal in the sense their Bayes regret is still $O(r\sqrt{T})$. We perform numerical experiments using the Yelp academic data to compare our modified algorithms as well as the original PEGE algorithm. The results suggest our modified algorithm are much better. Further, we compare our modified algorithms with UCB and Exponential Gradient algorithm. 
 
@@ -119,7 +119,7 @@ where the cumulative regret is defined as the following:
 
 We are interested in the multi armed bandits problem with correlated arms. Theoretically this problem can be solved using dynamic programming, however it usually suffers from the curse of dimensionality when the dimension of the arm is high. Thus, it is desirable to develop some computational feasible heuristic algorithms.
 
-In $\cite{Paat}$, they proved the following theorem which gives a lower bound for the bayes risk:
+In \cite{Paat}, they proved the following theorem which gives a lower bound for the bayes risk:
 
 \begin{theorem}(Lower Bound)
 Consider a bandit problem where the set of arms is the unit sphere in $\mathbb{R}^{r}$, and $\epsilon_{t}$ has a standard normal distribution with mean 0 and variance one for all t and $X_{t}$. If $\theta$ has a multivariate normal distribution with mean $\bold{0}$ and covariance matrix $\bold{I}_{r}/r$, then for all policies $\pi$ and every $T\geq r^{2}$,
@@ -517,6 +517,42 @@ In this simulation, we use the yelp academic dataset. The goal of this simulatio
 
 For each user, we calculated his user preference vector based on his rating and the restaurants' feature vectors that he rated using ridge regression (since there are not too many ratings, ordinary linear regression doesn't work here due to singularity). Then we calculated the sample mean and the sample variance of all users' preference vector and denote them as $(\mu,\Sigma)$. We further assume that for each user's preference vector $\theta\sim N(\mu,\Sigma)$ and generate new user from this distribution.
 
+In our numerial examples, the reward function when the restaurant
+$i$ is choosen is defined as 
+\[
+x_{i}\cdot\theta+\epsilon
+\]
+where $\epsilon\sim N\left(0,0.8\right)$, $\theta$ is the user's
+preference vector and $x_{i}$ is the feature vector of the restaurant
+$i$.
+
+In our first example, we use the EXP3 algorithm with $\gamma=0.5$.
+The time horizon is $1000$, and we simulated $100$ user's preference
+vectors. In Figure~\ref{fig: tahi}, we can see that the reward is little if we use this algorithm.
+
+In our second example, we use the UCB algorithm described in the previous
+section. The time horizon is $1000$, and we simulated $100$ user's
+preference vectors.  In Figure~\ref{fig: tah2}, we can see that its performance is much better
+than the EXP3 algorithm. 
+
+
+
+\begin{figure}[htb]
+{
+\centering
+\includegraphics[width=0.50\textwidth]{plot11}
+\caption{EXP3 algorithm. \label{fig: tahi}}
+}
+\end{figure}
+
+\begin{figure}[htb]
+{
+\centering
+\includegraphics[width=0.50\textwidth]{UCB1}
+\caption{UCB algorithm. \label{fig: tah2}}
+}
+\end{figure}
+
 
 
 \section{Possible Applications}
@@ -555,5 +591,3 @@ Recommender systems want to find the preference that a user would give to a subs
 % changed version of the previous year's version by Andrew Moore, 
 % which was in turn edited from those of Kristian Kersting and 
 % Codrina Lauth. Alex Smola contributed to the algorithmic style files.  
-
-
