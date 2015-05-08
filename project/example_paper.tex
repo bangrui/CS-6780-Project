@@ -503,6 +503,9 @@ section. The time horizon is $1000$, and we simulated $100$ user's
 preference vectors.  In Figure~\ref{fig: tah2}, we can see that its performance is much better
 than the performance of EXP3 algorithm. 
 
+In the third example, we use the UCB algorithm in the first 100
+ stages, and then we use the EXP3 algorithm. In Figure~\ref{fig: tah3}, we can see that its performance is better than the EXP3 algorithm but worse than the UCB algorithm. However, it is faster than the UCB algorithm.
+
 
 
 \begin{figure}[htb]
@@ -518,6 +521,14 @@ than the performance of EXP3 algorithm.
 \centering
 \includegraphics[width=0.50\textwidth]{UCB1}
 \caption{UCB algorithm. \label{fig: tah2}}
+}
+\end{figure}
+
+\begin{figure}[htb]
+{
+\centering
+\includegraphics[width=0.50\textwidth]{UCBEXP3}
+\caption{UCB algorithm. \label{fig: tah3}}
 }
 \end{figure}
 

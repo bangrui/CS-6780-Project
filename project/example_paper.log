@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/MacPorts 2014_5) (preloaded format=pdflatex 2015.2.21)  8 MAY 2015 14:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/MacPorts 2014_5) (preloaded format=pdflatex 2015.2.21)  8 MAY 2015 18:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -407,63 +407,75 @@ LaTeX Info: Redefining \nameref on input line 58.
 \@outlinefile=\write3
 \openout3 = `example_paper.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 83.
+LaTeX Font Info:    Try loading font information for U+msa on input line 78.
 
 (/opt/local/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 83.
+LaTeX Font Info:    Try loading font information for U+msb on input line 78.
 
 (/opt/local/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Overfull \hbox (5.1225pt too wide) in paragraph at lines 78--78
+ [] 
+ []
 
+
+Underfull \hbox (badness 4132) in paragraph at lines 79--80
+\OT1/cmr/m/n/10 ban-dits prob-lem, where the re-ward of
+ []
+
+
+Underfull \hbox (badness 2351) in paragraph at lines 79--80
+\OT1/cmr/m/n/10 each arm lin-early de-pends on a multi-
+ []
 
 
 Package amsfonts Warning: Obsolete command \bold; \mathbf should be used instea
-d on input line 94.
+d on input line 98.
 
 
-Overfull \hbox (6.2094pt too wide) detected at line 112
-[][]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]; T; ^^Y\OT1/cmr/m/n/10 ) = [] \OML/
-cmm/m/it/10 E [] :
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[1{/opt/local/var/db/texmf/fonts/map/pdftex/updmap/pdftex.map}
+ [1{/opt/local/var/db/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 135.
+Overfull \hbox (6.2094pt too wide) detected at line 116
+[][]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]; T; ^^Y\OT1/cmr/m/n/10 ) = [] \OML/
+cmm/m/it/10 E [] :
+ []
 
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 139.
 
 (/opt/local/share/texmf-texlive/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 135.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 139.
 
-Underfull \hbox (badness 1783) in paragraph at lines 139--142
+Underfull \hbox (badness 1783) in paragraph at lines 143--146
 \OT1/cmr/m/it/10 and the set of arms $\OMS/cmsy/m/n/10 U[] ^^Z \U/msb/m/n/10 R[
 ]$ \OT1/cmr/m/it/10 has r lin-
  []
 
 [2]
-Underfull \hbox (badness 1895) in paragraph at lines 268--269
+Underfull \hbox (badness 1895) in paragraph at lines 271--272
 []\OT1/cmr/m/n/10 At $\OML/cmm/m/it/10 c$\OT1/cmr/m/n/10 th cy-cle, con-di-tion
 al on $\OML/cmm/m/it/10 Z\OT1/cmr/m/n/10 (1)\OML/cmm/m/it/10 ; []  ; Z\OT1/cmr/
 m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 )$ (we
  []
 
 
-Underfull \hbox (badness 1127) in paragraph at lines 268--269
+Underfull \hbox (badness 1127) in paragraph at lines 271--272
 \OT1/cmr/m/n/10 will use $\OML/cmm/m/it/10 Z\OT1/cmr/m/n/10 (1\OML/cmm/m/it/10 
 ; []  ; c\OT1/cmr/m/n/10 )$ later), which are ob-serv-able,
  []
 
 [3]
-Overfull \hbox (21.29198pt too wide) detected at line 312
+Overfull \hbox (21.29198pt too wide) detected at line 315
 []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c\OT1/cmr/m/n/10 ) = ([] \OT1/cmr/bx/n/10 b
 []b[]\OT1/cmr/m/n/10 )[] [] \OML/cmm/m/it/10 w[] [] \OT1/cmr/bx/n/10 b[]\OML/cm
 m/m/it/10 Y[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 ) = \OML/cmm/m/
@@ -472,103 +484,97 @@ it/10 ^^R[] \OT1/cmr/m/n/10 + [] \OML/cmm/m/it/10 w[]W\OT1/cmr/m/n/10 (\OML/cmm
  []
 
 
-Underfull \hbox (badness 1478) in paragraph at lines 312--314
+Underfull \hbox (badness 1478) in paragraph at lines 315--317
 \OT1/cmr/m/n/10 as the es-ti-ma-tor of $\OML/cmm/m/it/10 ^^R[]$ \OT1/cmr/m/n/10
  in the $\OML/cmm/m/it/10 c$\OT1/cmr/m/n/10 th cy-cle, where
  []
 
 [4]
-Underfull \hbox (badness 2443) in paragraph at lines 391--393
+Underfull \hbox (badness 2443) in paragraph at lines 394--396
 \OT1/cmr/m/n/10 Thus, $\OML/cmm/m/it/10 Trace\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 
 X[]X[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 X[]X[]\OT1/cmr/m/n/10 ) \OML/cmm/m/it
 /10 < Trace\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X[]X[]\OT1/cmr/m/n/10 )$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 391--393
+Underfull \hbox (badness 10000) in paragraph at lines 394--396
 \OT1/cmr/m/n/10 is equiv-a-lent to show $\OML/cmm/m/it/10 Trace\OT1/cmr/m/n/10 
 (\OML/cmm/m/it/10 A[]X[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 I \OT1/cmr/m/n/10 +
  []
 
-
-Overfull \hbox (78.44316pt too wide) in paragraph at lines 413--420
- [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 425--426
-[]\OT1/cmr/m/n/10 At step $\OML/cmm/m/it/10 t \OT1/cmr/m/n/10 + 1$, we have kno
-wl-edge
- []
-
-
-Overfull \hbox (23.56262pt too wide) in paragraph at lines 431--431
-[] 
- []
-
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 484--489
+Underfull \hbox (badness 10000) in paragraph at lines 452--457
 \OT1/cmr/m/n/10 and then we will choose the arm $\OML/cmm/m/it/10 u[] \OT1/cmr/
 m/n/10 =
  []
 
 
-Overfull \hbox (2.56151pt too wide) in paragraph at lines 484--489
+Overfull \hbox (2.56151pt too wide) in paragraph at lines 452--457
 [][] []$
  []
 
-<plot11.png, id=123, 578.16pt x 433.62pt>
+<plot11.png, id=120, 578.16pt x 433.62pt>
 File: plot11.png Graphic file (type png)
  <use plot11.png>
-Package pdftex.def Info: plot11.png used on input line 543.
+Package pdftex.def Info: plot11.png used on input line 514.
 (pdftex.def)             Requested size: 243.91124pt x 182.93298pt.
 
-Overfull \hbox (9.03374pt too wide) in paragraph at lines 543--544
+Overfull \hbox (9.03374pt too wide) in paragraph at lines 514--515
  [][] 
  []
 
-<UCB1.png, id=125, 578.16pt x 433.62pt>
+<UCB1.png, id=122, 578.16pt x 433.62pt>
 File: UCB1.png Graphic file (type png)
  <use UCB1.png>
-Package pdftex.def Info: UCB1.png used on input line 551.
+Package pdftex.def Info: UCB1.png used on input line 522.
 (pdftex.def)             Requested size: 243.91124pt x 182.93298pt.
 
-Overfull \hbox (9.03374pt too wide) in paragraph at lines 551--552
+Overfull \hbox (9.03374pt too wide) in paragraph at lines 522--523
+ [][] 
+ []
+
+<UCBEXP3.png, id=123, 578.16pt x 433.62pt>
+File: UCBEXP3.png Graphic file (type png)
+ <use UCBEXP3.png>
+Package pdftex.def Info: UCBEXP3.png used on input line 530.
+(pdftex.def)             Requested size: 243.91124pt x 182.93298pt.
+
+Overfull \hbox (9.03374pt too wide) in paragraph at lines 530--531
  [][] 
  []
 
 
-Underfull \vbox (badness 1635) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [6]
+Underfull \vbox (badness 1389) has occurred while \output is active []
 
-Package natbib Warning: Citation `langley00' undefined on input line 564.
 
-(./example_paper.bbl
-Underfull \vbox (badness 2042) has occurred while \output is active []
 
-)
+Package natbib Warning: Citation `langley00' undefined on input line 542.
+
+(./example_paper.bbl)
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 580.
-[7 <./plot11.png> <./UCB1.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 580.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 558.
+[7 <./plot11.png> <./UCB1.png> <./UCBEXP3.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 558.
  (./example_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 580.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 580.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 558.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 558.
 Package rerunfilecheck Info: File `example_paper.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 580.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 558.
  ) 
 Here is how much of TeX's memory you used:
- 6928 strings out of 494213
- 97747 string characters out of 6157463
- 206954 words of memory out of 5000000
- 10059 multiletter control sequences out of 15000+600000
- 10857 words of font info for 39 fonts, out of 8000000 for 9000
+ 6952 strings out of 494213
+ 98009 string characters out of 6157463
+ 209990 words of memory out of 5000000
+ 10077 multiletter control sequences out of 15000+600000
+ 14354 words of font info for 52 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
- 29i,15n,45p,772b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,15n,45p,1019b,500s stack positions out of 5000i,500n,10000p,200000b,80000s
 </opt/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></o
 pt/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></opt/lo
 cal/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx7.pfb></opt/local/sh
@@ -579,21 +585,23 @@ live/fonts/type1/public/amsfonts/cm/cmex10.pfb></opt/local/share/texmf-texlive/
 fonts/type1/public/amsfonts/cmextra/cmex7.pfb></opt/local/share/texmf-texlive/f
 onts/type1/public/amsfonts/cm/cmmi10.pfb></opt/local/share/texmf-texlive/fonts/
 type1/public/amsfonts/cm/cmmi5.pfb></opt/local/share/texmf-texlive/fonts/type1/
-public/amsfonts/cm/cmmi7.pfb></opt/local/share/texmf-texlive/fonts/type1/public
-/amsfonts/cm/cmr10.pfb></opt/local/share/texmf-texlive/fonts/type1/public/amsfo
-nts/cm/cmr5.pfb></opt/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/
-cmr7.pfb></opt/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pf
-b></opt/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsl9.pfb></op
-t/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/loc
-al/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy5.pfb></opt/local/sha
-re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></opt/local/share/tex
-mf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb></opt/local/share/texmf-te
-xlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb></opt/local/share/texmf-te
-xlive/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on example_paper.pdf (7 pages, 322440 bytes).
+public/amsfonts/cm/cmmi6.pfb></opt/local/share/texmf-texlive/fonts/type1/public
+/amsfonts/cm/cmmi7.pfb></opt/local/share/texmf-texlive/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></opt/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm
+/cmr5.pfb></opt/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.p
+fb></opt/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></op
+t/local/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsl9.pfb></opt/loca
+l/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/local/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy5.pfb></opt/local/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></opt/local/share/texmf-tex
+live/fonts/type1/public/amsfonts/cm/cmti10.pfb></opt/local/share/texmf-texlive/
+fonts/type1/public/amsfonts/cm/cmti9.pfb></opt/local/share/texmf-texlive/fonts/
+type1/public/amsfonts/symbols/msbm10.pfb></opt/local/share/texmf-texlive/fonts/
+type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on example_paper.pdf (7 pages, 365163 bytes).
 PDF statistics:
- 237 PDF objects out of 1000 (max. 8388607)
- 200 compressed objects within 2 object streams
- 66 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 245 PDF objects out of 1000 (max. 8388607)
+ 203 compressed objects within 3 object streams
+ 64 named destinations out of 1000 (max. 500000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
