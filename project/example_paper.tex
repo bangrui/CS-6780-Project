@@ -86,7 +86,7 @@ Exploration vs. Exploitation has been studied extensively under the framework of
 
 Since then, a lot of research has been focused on the dependent case. In \cite{Gabor} and \cite{Chih-Chun}, they studied the multi-bandit problem with side information. In \cite{Yasin1} and \cite{Yasin2}, people consider the reward for each bandit is the inner product between an single unknown parameter and the bandit. In \cite{Paat}, they modeled the expected reward of each arm linearly depends on a multivariate random variable. Furthermore in that paper, they showed that under arbitrary policy, the Bayes regret is $O(r\sqrt{T})$ where r is the dimensional of the multivariate random variable. They also provided an simple Phased Exploration Greedy Exploitation (PEGE) algorithm that reaches the $O(r\sqrt{T})$ regret bound.
 
-Through PEGE reaches the optimal regret bound, it doesn't perform well in practice. In this project, we modified the PEGE algorithm and get three heuristic algorithms. We proved the first modified algorithm is still optimal in the sense their Bayes regret is still $O(r\sqrt{T})$. We perform numerical experiments using the Yelp academic data to compare our modified algorithms as well as the original PEGE algorithm. The results suggest our modified algorithm are much better. Further, we compare our modified algorithms with UCB and Exponential Gradient algorithm. Although UCB algorithm outperformed our new algorithms, it requires previous knowledge about the multivariate random variable, which is impossible for the ``cold start" problems. Our newly modified performed better than other algorithms and doesn't require any previous knowledge.
+Though PEGE reaches the optimal regret bound, it doesn't perform well in practice. In this project, we modified the PEGE algorithm and get three heuristic algorithms. We proved the first modified algorithm is still optimal in the sense their Bayes regret is still $O(r\sqrt{T})$. We perform numerical experiments using the Yelp academic data to compare our modified algorithms as well as the original PEGE algorithm. The results suggest our modified algorithm are much better. Further, we compare our modified algorithms with UCB and Exponential Gradient algorithm. Although UCB algorithm outperformed our new algorithms, it requires previous knowledge about the multivariate random variable, which is impossible for the ``cold start" problems. Our newly modified performed better than other algorithms and doesn't require any previous knowledge.
 
 There are lots of application for this problem. For instance, a newly registered user for a website with no background information will typically face a cold start problem. Same thing would happen to a investment company who wants to invest money into emerging industries. Furthermore, this problem is closely related to the recommender systems, which are a subclass of information filtering system that seek to predict the ``rating" or ``preference" that user would give to an item. In these applications, one natural question would be how can we quickly learn user's preference from their feedback? All of these problems can be modeled as a multi-armed bandit problem and our heuristic policies can be applied.
 
@@ -194,8 +194,8 @@ E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq \frac{h_{
 Suppose that Assumption 1 holds and the set $\mathbb{U}_{r}$ satisfy the SBAR(J) condition. Then, there exists a positive constant $h_{2}$ that depends only on $\sigma_{0}$, $\bar{u}$, $\lambda_{0}$ and J, such that for any $\textbf{z}\in \mathbb{R}^{r}$ and $c\geq 1$,
 \begin{align}
 &E \left[ \max_{\textbf{u}\in \mathcal{U}_{r}} \theta_{0}^{'}(\textbf{u}-\textbf{G}(c))|\theta=\theta_{0}\right] \nonumber \\
-\leq & \frac{2}{\|\theta_0\|}E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq
-\frac{2h_{1}r}{c\|\theta_{0}\|} =\frac{h_2r}{c\|\theta_0\|}.
+\leq & \frac{2J}{\|\theta_0\|}E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq
+\frac{2Jh_{1}r}{c\|\theta_{0}\|} =\frac{h_2r}{c\|\theta_0\|}.
 \end{align}
 \end{lemma}
 
@@ -204,7 +204,7 @@ Suppose that Assumption 1 holds and the set $\mathbb{U}_{r}$ satisfy the SBAR(J)
 We analyse the convergence order of PEGE based on the above assumptions and lemmas:
 
 In the $k$th step of an $r$-period exploration, we have the observation:
-\[\text{E}\left[\max_{X\in\mathcal{U}_r} X\cdot \theta_0 - \bold{b}_k\cdot\theta_0 | \theta = \theta_0\right]\leq 2\bar{u}\cdot\|\theta_0\|\].
+\[\text{E}\left[\max_{X\in\mathcal{U}_r} X\cdot \theta_0 - \bold{b}_k\cdot\theta_0 | \theta = \theta_0\right]\leq 2\bar{u}\cdot\|\theta_0\|.\]
 
 
 Suppose there are $C$ cycles in the learning (the last cycle may not be completed), then the number of steps is
@@ -217,13 +217,13 @@ Thus, $C\leq \sqrt{2T}$ and the regret is bounded by the following expresion:
 = & (2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})rC
 <  \sqrt{2}(2\bar{u}\|\theta_0\|+\frac{h_2}{\|\theta_0\|})r\sqrt{T}. \label{reg:PEGE}
 \end{align}
-Thus, we know the Bayes risk is at most $O(r\sqrt{T})$. Although PEGE algorithm reaches the theoretical Bayes risk lower bound, it doesn't perform well in practice. Thus, we proposed the following three modified PEGE algorithms which perform better in practice. One intuitive reason is for a small T, we do too many steps of exploration. Our heuristic policies focus on balancing the number of exploration and exploitation.
+Thus, we know the Bayes risk is at most $O(r\sqrt{T})$. Although PEGE algorithm reaches the theoretical Bayes risk lower bound, it doesn't perform well in practice. One intuitive reason is for a small $T$, we do too many steps of exploration. Thus, we proposed the following three modified PEGE algorithms which perform better in practice. Our heuristic policies focus on balancing the number of exploration and exploitation.
 % with a smaller constant?
 
 %%%%%%%%%%%%%%%%%%%%%% Modifications 1 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{modification}
-In the first modified algorithm, instead of doing c periods of exploitation in cycle c, we now do kc periods of exploitation, where k is a constant (Algorithm 2). 
+In the first modified algorithm, instead of doing $c$ periods of exploitation in cycle $c$, we now do $kc$ periods of exploitation, where $k$ is a constant (Algorithm 2). 
 \begin{algorithm}\label{alg:PEGE1}
 \caption{PEGE Modified 1}
 \textbf{Description}: For each cycle $c\geq 1$, complete the following two phases:
@@ -247,11 +247,11 @@ When $k<2r$, $C\leq\sqrt{\frac{2T}{k}}$. Therefore
 & \text{Regret}(\theta_0, T, PEGE1)\leq (2\bar{u}\|\theta_0\|+k\frac{h_2}{\|\theta_0\|})rC \nonumber\\
 \leq & \sqrt{2}(2\bar{u}\|\theta_0\|/\sqrt{k}+\sqrt{k}\frac{h_2}{\|\theta_0\|})r\sqrt{T}.
 \end{align}
-A suitable $k$ which minimises this upper bound is
+A suitable $k$ which minimizes this upper bound is
 \begin{equation}
-k^*=\frac{2\bar{u}\|\theta_0\|^2}{h_2}. \nonumber 
+k^*=\left[\max\{2r, \frac{2\bar{u}\|\theta_0\|^2}{h_2}\}\right]. \nonumber 
 \end{equation}
-However, since we do not know $\|\theta_0\|$ in advance, we need to estimate it base on the prior distribution of $\theta$ and may also adjust our estimation adaptively based on the results we get in each step. If we don't have any previous information, we could choose a k based on T so that the ratio between the exploitation steps and the exploration steps are relatively large, for instance:
+However, since we do not know $\|\theta_0\|$ in advance, we need to estimate it base on the prior distribution of $\theta$ and may also adjust our estimation adaptively based on the results we get in each step. If we do not have any previous information, we could choose a $k$ based on $T$ so that the ratio between the exploitation steps and the exploration steps are relatively large, for instance:
 \begin{equation}
 \frac{kC(C-1)}{r(C-1)}=\frac{kC}{r}\geq 0.8. \nonumber 
 \end{equation}
@@ -309,17 +309,17 @@ Z'(1)-Z'(2)\\
 Z'(1)-Z'(3)\\
 \cdots\\
 Z'(1)-Z'(c)
-\end{array}\right)
+\end{array}\right).
 \end{align*}
 The dimension of $A$ is $(c-1)$ by $c$. Using QR decomposition, we can get $A=LQ$, where $L$ is $(c-1)$ by $c$ lower triangular matrix, $Q$ is $c$ by $c$ orthogonal matrix. Let ${V}=Q\vec{W}$. Then 
-\[L{V}=\vec{Z},\quad \vec{W}=Q'V\]
+\[L{V}=\vec{Z},\quad \vec{W}=Q'V.\]
 Further, we assume
 \begin{align*}
 L=(\tilde{L},\vec{0}),\quad {V}=\left(\begin{array}{c}\tilde{V}\\\vec{v}_c\end{array}\right),\quad Q=\left(\begin{array}{c}\tilde{Q}\\\vec{q}_c\end{array}\right),
 \end{align*}
 where $\tilde{L}$ is $(c-1)\times (c-1)$ invertible matrix, $\tilde{V}$ is $(c-1)\times r$ matrix, $\tilde{Q}$ is $(c-1)\times c$ matrix, $\vec{0}$ is $c-1$ dimensional column vector, $\vec{v}_c$ is $r$ dimensional row vector, and $\vec{q}_c$ is $c$ dimensional row vector. Then
-\[\vec{Z}=LV = \tilde{L}\tilde{V} \quad \Rightarrow \quad \tilde{V}=\tilde{L}^{-1}\vec{Z}.\]
-\[\vec{W}=Q'V=\tilde{Q}'\tilde{V}+\vec{q}_c'\vec{v}_c=\tilde{Q}'\tilde{L}^{-1}\vec{Z}+\vec{q}_c'\vec{v}_c\]
+\[\vec{Z}=LV = \tilde{L}\tilde{V} \quad \Rightarrow \quad \tilde{V}=\tilde{L}^{-1}\vec{Z},\]
+\[\vec{W}=Q'V=\tilde{Q}'\tilde{V}+\vec{q}_c'\vec{v}_c=\tilde{Q}'\tilde{L}^{-1}\vec{Z}+\vec{q}_c'\vec{v}_c.\]
 Since $\vec{v}_c$ is independent of $\tilde{V}$, conditional on all the results in the explorations, the distribution of $\vec{v}_c$ is still $\mathcal{N}(\vec{0},\Sigma)$.
 
 Let $\vec{\bold{1}}=(1,1,\cdots,1)'$. Notice that
@@ -342,7 +342,7 @@ as the estimator of $\theta_0$ in the $c$th cycle, where $\sum_{s=1}^{c}w_s=1$. 
 =&\|\vec{Z}'\tilde{L}'^{-1}\tilde{Q}\vec{w}\|^2+tr(\Sigma)/c\\
 \geq & tr(\Sigma)/c
 \end{align*}
-When $\vec{w}=\frac{1}{c}\vec{\bold{1}}$, the equality holds.
+When $\vec{w}=\frac{1}{c}\vec{\bold{1}}$, $\vec{Z}'\tilde{L}'^{-1}\tilde{Q}\vec{w}=\vec{0}$. Then the equality holds.
 
 Therefore, we cannot get a better estimation than (\ref{eq:betterEsquare}).
 
@@ -364,8 +364,8 @@ Thus, in the second modification, we stop the exploration when we think we have 
 \hat{\theta}(c)&=\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}Y^{b_{k}}(s) \nonumber \\
 &=\theta+\frac{1}{c}(\sum_{k=1}^{r}\textbf{b}_{k}\textbf{b}_{k}^{'})^{-1}\sum_{s=1}^{c}\sum_{k=1}^{r}\textbf{b}_{k}\epsilon^{b_{k}}(s) \nonumber 
 \end{align}
-where for any k, $Y^{b_{k}}(s)$, and $\epsilon^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle s.
-\item [1.(b) ] \textbf{Exploitation (c periods)} Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathcal{U}^{r}}\textbf{v}^{'}\hat{\theta}(c)$ for c periods in the $c_{th}$ cycle.
+where for any $k$, $Y^{b_{k}}(s)$, and $\epsilon^{b_{k}(s)}$ denote the observed reward and the error random variable associated with playing arm $\textbf{b}_{k}$ in cycle $s$.
+\item [1.(b) ] \textbf{Exploitation (c periods)} Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathcal{U}^{r}}\textbf{v}^{'}\hat{\theta}(c)$ for $c$ periods in the $c$th cycle.
 \end{enumerate}
 \item [2.  ] Play the greedy arm $\textbf{G}(c)=\arg \max_{v\in \mathcal{U}^{r}}\textbf{v}^{'}\hat{\theta}(c)$ thereafter.
 \end{itemize}
@@ -418,7 +418,7 @@ Thus, $Trace(X_{1}^{T}X_{1}+X_{2}^{T}X_{2}) < Trace(X_{1}^{T}X_{1})$ is equivale
 The Algorithm 4 has smaller bayes risk than Algorithm 3.
 \end{theorem}
 \begin{proof}
-As we discussed before, we just need to show $(\ref{alg3})$ holds true. Since we assume $\epsilon\sim N(0,\sigma^{2})$, thus the OLS estimator $\hat{\beta}$ of $Y=X\beta+\epsilon$ follows a normal distribution $\hat{\beta}\sim N(\beta,\sigma^{2}(X^{T}X)^{-1})$. Thus $E[\|\hat{\beta}-\beta\|^{2}]=\sigma^{2}Trace(X^{T}X)^{-1}$. If we denote $X(c,t)$ is the X vector for the $\hat{\theta(c,t)}$ and $X(c)$ is the X vector for the $\hat{\theta(c)}$, then $X(c,t)$ contains more rows than $X(c)$. Based on our previous lemma, we know $(\ref{alg3})$ holds true.
+As we discussed before, we just need to show $(\ref{alg3})$ holds true. Since we assume $\epsilon\sim N(0,\sigma^{2})$, thus the OLS estimator $\hat{\beta}$ of $Y=X\beta+\epsilon$ follows a normal distribution $\hat{\beta}\sim N(\beta,\sigma^{2}(X^{T}X)^{-1})$. Thus $E[\|\hat{\beta}-\beta\|^{2}]=\sigma^{2}Trace(X^{T}X)^{-1}$. If we denote $X(c,t)$ as the X vector for the $\hat{\theta}(c,t)$ and $X(c)$ is the X vector for the $\hat{\theta}(c)$, then $X(c,t)$ contains more rows than $X(c)$. Based on our previous lemma, we know $(\ref{alg3})$ holds true.
 \end{proof}
 
 
@@ -427,7 +427,7 @@ As we discussed before, we just need to show $(\ref{alg3})$ holds true. Since we
 
 
 \section{UCB and EXP3}
-Besides the PEGE algorithm, there are two other well known algorithms for this problem, which are Exponential Gradient algorithm and the upper confidence bound algorithm. These are two different types of algorithms, UCB requires previous information about $\theta$ which is impossible for the ``cold start" problems. However, due to the previous information, it usually performs very well in most cases. Exponential Gradient (EXP3) is a randomized algorithm and doesn't require any previous information. However, when the number of arms are large, it usually doesn't perform very well.
+Besides the PEGE algorithm, there are two other well known algorithms for this problem, which are Exponential Gradient algorithm and the upper confidence bound algorithm (UCB). These are two different types of algorithms, UCB requires previous information about $\theta$ which is impossible for the ``cold start" problems. However, due to the previous information, it usually performs very well in most cases. Exponential Gradient (EXP3) is a randomized algorithm and doesn't require any previous information. However, when the number of arms are large, it usually doesn't perform very well.
 
 
 
@@ -500,7 +500,7 @@ weights may be zero in most of the cases.
 
 
 \section{Numerical Experiment}
-In this simulation, we use the yelp academic dataset. The goal of this simulation is to find the favorite restaurant categories for a new user. There are 4596 restaurants in the dataset and each restaurant belongs to one or multiple categories. We first find the top twenty categories that has most restaurants, which are Pizza, Sandwiches, Food etc, and use those 20 categories as our feature. For each restaurant, if it belongs to certain category, then the corresponding element of its feature vector is 1 and 0 otherwise. So the feature vector of each restaurant is a 20 dimensional binary vector. 
+In this simulation, we use the Yelp academic dataset. The goal of this simulation is to find the favorite restaurant categories for a new user. There are 4596 restaurants in the dataset and each restaurant belongs to one or multiple categories. We first find the top twenty categories contained by most restaurants, which are Pizza, Sandwiches, Food etc, and use those 20 categories as our feature. For each restaurant, if it belongs to certain category, then the corresponding element of its feature vector is 1 and 0 otherwise. So the feature vector of each restaurant is a 20 dimensional binary vector. 
 
 For each historical user, we calculated his user preference vector based on his rating and the restaurants' feature vectors that he rated using ridge regression (since there are not too many ratings, ordinary linear regression doesn't work here due to singularity). Then we calculated the sample mean and the sample variance of all users' preference vector and denote them as $(\mu,\Sigma)$. We further assume that for each user's preference vector $\theta\sim N(\mu,\Sigma)$ and generate new user from this distribution.
 
@@ -558,7 +558,7 @@ preference vectors.  In Figure~\ref{fig: tah2}, we can see that its performance 
 
 \section{Conclusion}
 
-In this paper, we studied the linearly parameterized bandits problem, where the reward of each arm linearly depends on a multivariate random variable. In $\cite{Paat}$, it provided an simple algorithm PEGE which reaches the optimal Bayes regret bound $O(r\sqrt{T})$. However, the PEGE algorithm doesn't perform well in practice, since it does the same number of exploitation steps regardless the exploration result. We provided three new PEGE algorithms which balance the number of exploration and exploitation better. We proved the our first heuristic algorithm still has Bayes risk $O(r\sqrt{T})$. Further, we compared our modified algorithms with PEGE as well as UCB and EXP using the Yelp academic dataset. Though UCB performs the best (almost optimal) among these algorithms, it requires a lot of previous information. Our new algorithms which outperformed the PEGE and EXP3 don't depend on the previous information and could be applied to the ``cold start" problems.
+In this paper, we studied the linearly parameterized bandits problem, where the reward of each arm linearly depends on a multivariate random variable. In $\cite{Paat}$, it provided an simple algorithm PEGE which reaches the optimal Bayes regret bound $O(r\sqrt{T})$. However, the PEGE algorithm does not perform well in practice, since it does the same number of exploitation steps regardless the exploration result. We provided three new PEGE algorithms which balance the number of exploration and exploitation better. We proved that our first heuristic algorithm still has Bayes risk $O(r\sqrt{T})$. Further, we compared our modified algorithms with PEGE as well as UCB and EXP using the Yelp academic dataset. Though UCB performs the best (almost optimal) among these algorithms, it requires a lot of previous information. Our new algorithms which outperformed the PEGE and EXP3 do not depend on the previous information and can be applied to the ``cold start" problems.
 
 
 \nocite{langley00}
