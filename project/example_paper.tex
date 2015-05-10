@@ -185,7 +185,7 @@ Risk(T,PEGE)\leq a_{1}r\sqrt{T}. \nonumber
 The proof of the theorem is that calculate the Bayes risk for the exploitation and exploration periods respectively and add them together. In order to prove the above mentioned theorem, it requires the following two lemmas:
 \begin{lemma}
 Under Assumption 1, there exists a positive constant $h_{1}$ that depends only on $\sigma_{0}$, $\bar{u}$ and $\lambda_{0}$ such that for any $\textbf{z}\in \mathbb{R}^{r}$ and $c\geq 1$,
-\begin{equation}
+\begin{equation}\label{eq:Esquare}
 E\left[\|\hat{\theta}(c)-\theta_{0}\|^{2}|\theta=\theta_{0}\right]\leq \frac{h_{1}r}{c}. 
 \end{equation} 
 \end{lemma}
@@ -259,20 +259,26 @@ However, since we do not know $\|\theta_0\|$ in advance, we need to estimate it 
 
 \begin{modification}
 
+We can get an estimation of $E[\|\hat{\theta}(c)-\theta_0\|^2|\theta=\theta_0]$ better than (\ref{eq:Esquare}), which is:
+\begin{equation}\label{eq:betterEsquare}
+E[\|\hat{\theta}(c)-\theta_0\|^2|\theta=\theta_0]=\frac{1}{c}tr(\Sigma)
+\end{equation}
+Here 
+$\Sigma=\sigma^2(B^TB)^{-1}$, for which $B=(\bold{b}_1,\cdots,\bold{b}_r)$. And conditional on the results of explorations in the first $c$ cycles, we cannot get a better estimation than that.
 
-
-%%%%%%%%%%%%%%%%%%%%%% Modifications 2* %%%%%%%%%%%%%%%%%%%%%%%%%%
-% This is a revised version of modification 2:
-
+\begin{proof}
 To be brief, we introduce notations
  \[W(c)=(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\sum_{k=1}^{r}\bold{b}_{k}\epsilon^{\bold{b}_k}(c),\] 
  \[Z(c) =(\sum_{k=1}^{r}\bold{b}_k\bold{b}_k')^{-1}\sum_{k=1}^{r}\bold{b}_{k}Y^{\bold{b}_k}(c).\] 
 
-At $c$th cycle, conditional on $Z(1), \cdots, Z(c)$ (we will use $Z(1,\cdots, c)$ later), which are observable, we can get a more delicate estimation $E[\|\hat{\theta}(c)-\theta_0\|^2 | Z(1,\cdots, c), \theta = \theta_0]$ instead of $E[\|\hat{\theta}(c)-\theta_0\|^2|\theta=\theta_0]$. In addition, we can estimate $\hat{\theta}(c)$ as a weighted summation instead of the average to make the above value even smaller.
+It is easy to find that $W(1),\cdots, W(c)\stackrel{i.i.d.}{\sim}\mathcal{N}(\vec{0},\Sigma)$.  Then, 
+\[\hat{\theta}(c)-\theta_0=\frac{1}{c}\sum_{s=1}^{c}W(s)\]
+\[
+E\left[\|\hat{\theta}(c)-\theta_0\|^2|\theta=\theta_0\right]
+=\frac{1}{c^2}\sum_{s=1}^{c}E[\|W(s)\|^2]=\frac{1}{c}tr(\Sigma)
+\]
 
-It is easy to find that $W(1),\cdots, W(c)\stackrel{i.i.d.}{\sim}\mathcal{N}(\vec{0},\Sigma)$. Here 
-\[\Sigma=\sigma^2(B^TB)^{-1},\quad \text{for which }B=(\bold{b}_1,\cdots,\bold{b}_r).\]
-We have
+At $c$th cycle, conditional on $Z(1), \cdots, Z(c)$ (we will use $Z(1,\cdots, c)$ later), which are observable, we have
 \begin{align*}
 \begin{array}{ll}
 W(1)-W(2)&=Z(1)-Z(2)\\
@@ -299,7 +305,7 @@ Z'(1)-Z'(c)
 \end{array}\right)
 \end{align*}
 The dimension of $A$ is $(c-1)$ by $c$. Using QR decomposition, we can get $A=LQ$, where $L$ is $(c-1)$ by $c$ lower triangular matrix, $Q$ is $c$ by $c$ orthogonal matrix. Let ${V}=Q\vec{W}$. Then 
-\[L{V}=\vec{Z}\]
+\[L{V}=\vec{Z},\quad \vec{W}=Q'V\]
 Further, we assume
 \begin{align*}
 L=(\tilde{L},\vec{0}),\quad {V}=\left(\begin{array}{c}\tilde{V}\\\vec{v}_c\end{array}\right),\quad Q=\left(\begin{array}{c}\tilde{Q}\\\vec{q}_c\end{array}\right),
@@ -308,6 +314,13 @@ where $\tilde{L}$ is $(c-1)\times (c-1)$ invertible matrix, $\tilde{V}$ is $(c-1
 \[\vec{Z}=LV = \tilde{L}\tilde{V} \quad \Rightarrow \quad \tilde{V}=\tilde{L}^{-1}\vec{Z}.\]
 \[\vec{W}=Q'V=\tilde{Q}'\tilde{V}+\vec{q}_c'\vec{v}_c=\tilde{Q}'\tilde{L}^{-1}\vec{Z}+\vec{q}_c'\vec{v}_c\]
 Since $\vec{v}_c$ is independent of $\tilde{V}$, conditional on all the results in the explorations, the distribution of $\vec{v}_c$ is still $\mathcal{N}(\vec{0},\Sigma)$.
+
+Let $\vec{\bold{1}}=(1,1,\cdots,1)'$. Notice that
+\begin{align*}
+{O}=A\vec{\bold{1}}=\tilde{L}\tilde{Q}\vec{\bold{1}}\quad \Rightarrow\quad \tilde{Q}\vec{\bold{1}}=O.
+\end{align*}
+Since $\vec{q}_c$ is orthogonal to each row of $\tilde{Q}$, 
+we claim that $\vec{q}_c=\frac{1}{\sqrt{c}}\vec{\bold{1}}'$. 
 
 Suppose we use 
 \[
@@ -318,27 +331,20 @@ as the estimator of $\theta_0$ in the $c$th cycle, where $\sum_{s=1}^{c}w_s=1$. 
 &E[\|\hat{\theta}(c)-\theta_0\|^2|Z(1,\cdots,c),\theta=\theta_0]\\
 =&E[\vec{w}'\vec{W}\vec{W}'\vec{w}|Z(1,\cdots,c),\theta=\theta_0]\\
 =& \vec{w}'\left(\tilde{Q}'\tilde{L}^{-1}\vec{Z}\vec{Z}'\tilde{L}'^{-1}\tilde{Q} + tr(\Sigma)\vec{q}_c'\vec{q}_c\right)\vec{w}\\
-:=&\vec{w}' A(c) \vec{w}
+:=&\vec{w}'\left(\tilde{Q}'\tilde{L}^{-1}\vec{Z}\vec{Z}'\tilde{L}'^{-1}\tilde{Q}\right)\vec{w}+\frac{tr(\Sigma)}{c}(\vec{w}'\vec{\bold{1}})^2\\
+=&\|\vec{Z}'\tilde{L}'^{-1}\tilde{Q}\vec{w}\|^2+tr(\Sigma)/c\\
+\geq & tr(\Sigma)/c
 \end{align*}
-Since $tr(\Sigma)=\sigma^2(B^TB)^{-1}$, and $\sigma$ is unknown to us, we use 
-\[\hat{\sigma}^2(c)=\frac{1}{r(c-1)}\left(\sum_{s=1}^{c}\|Z(s)\|^2-\frac{\|\sum_{s=1}^{c}Z(s)\|^2}{c}\right)\]
-as an estimator of $\sigma^2$ for $c>1$.
+When $\vec{w}=\frac{1}{c}\vec{\bold{1}}$, the equality holds.
 
-The optimal $\vec{w}$ that minimizes this equation is 
-\[\vec{w}^*=\frac{A^{-1}(c)\vec{\bold{1}}}{\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}}},\quad \text{for which }\vec{\bold{1}}=(1,\cdots,1)'.\]
-Thus,
-\begin{align*}
-&E[\|\hat{\theta}(c)-\theta_0\|^2|Z(1,\cdots,c),\theta=\theta_0]\\
-\geq & (\vec{w}^*)'A(c)\vec{w}^*
-=\frac{\vec{\bold{1}}'A^{-1}(c)A(c)A^{-1}(c)\vec{\bold{1}}}{(\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}})^2}\\
-=&\frac{\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}}}{(\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}})^2}=\frac{1}{\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}}}
-\end{align*}
+Therefore, we cannot get a better estimation than (\ref{eq:betterEsquare}).
 
-In cycle $c$, we denote $\frac{1}{\vec{\bold{1}}'A^{-1}(c)\vec{\bold{1}}}$ as $\delta(c)$. Then 
+\end{proof}
 
 
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add your method here:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{algorithm}\label{alg:PEGE2}
 \caption{PEGE Modified 2}
