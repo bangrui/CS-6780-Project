@@ -402,23 +402,35 @@ E[\|\hat{\theta}(c,t)-\theta_{0}\|^{2}|\theta=\theta_{0}] < E[|\hat{\theta}(c)-\
 \begin{lemma}
 Suppose $X_{1}$ is a $n_{1}\times k $ matrix and $X_{2}$ is a $n_{2}\times k$ matrix, then
 \begin{equation}
-Trace(X_{1}^{T}X_{1}+X_{2}^{T}X_{2}) < Trace(X_{1}^{T}X_{1}). \nonumber
+Tr(X_{1}'X_{1}+X_{2}'X_{2}) < Tr(X_{1}'X_{1}). \nonumber
 \end{equation}
 \end{lemma}
 \begin{proof}
-Denote $A=X_{1}^{T}X_{1}$, then use the Woodbury matrix identity, we get
+Denote $A=X_{1}'X_{1}$, then use the Woodbury matrix identity, we get
 \begin{align}
-&(X_{1}^{T}X_{1}+X_{2}^{T}X_{2})^{-1} \nonumber \\
-=& A^{-1}-A^{-1}X_{2}^{T}(I+X_{2}X_{2}^{T})^{-1}X_{2}A^{-1} \nonumber 
+&(X_{1}'X_{1}+X_{2}'X_{2})^{-1} \nonumber \\
+=& A^{-1}-A^{-1}X_{2}'(I+X_{2}X_{2}')^{-1}X_{2}A^{-1} \nonumber 
 \end{align}
-Thus, $Trace(X_{1}^{T}X_{1}+X_{2}^{T}X_{2}) < Trace(X_{1}^{T}X_{1})$ is equivalent to show $Trace(A^{-1}X_{2}^{T}(I+X_{2}X_{2}^{T})^{-1}X_{2}A^{-1})>0$. However, it is easy to see that $A^{-1}X_{2}^{T}(I+X_{2}X_{2}^{T})^{-1}X_{2}A^{-1}$ is a positive semidefinite matrix which means all of the eigenvalue is greater or equal to 0. Thus, our lemma holds.
+Thus, $Tr(X_{1}'X_{1}+X_{2}'X_{2}) < Tr(X_{1}'X_{1})$ is equivalent to show $Tr(A^{-1}X_{2}'(I+X_{2}X_{2}')^{-1}X_{2}A^{-1})>0$. However, it is easy to see that $A^{-1}X_{2}'(I+X_{2}X_{2}')^{-1}X_{2}A^{-1}$ is a positive semidefinite matrix which means all of the eigenvalue is greater or equal to 0. Thus, our lemma holds.
 \end{proof}
 
 \begin{theorem}
 The Algorithm 4 has smaller bayes risk than Algorithm 3.
 \end{theorem}
 \begin{proof}
-As we discussed before, we just need to show $(\ref{alg3})$ holds true. Since we assume $\epsilon\sim N(0,\sigma^{2})$, thus the OLS estimator $\hat{\beta}$ of $Y=X\beta+\epsilon$ follows a normal distribution $\hat{\beta}\sim N(\beta,\sigma^{2}(X^{T}X)^{-1})$. Thus $E[\|\hat{\beta}-\beta\|^{2}]=\sigma^{2}Trace(X^{T}X)^{-1}$. If we denote $X(c,t)$ as the feature vectors when estimating $\hat{\theta}(c,t)$ and $X(c)$ is the feature vectors when estimating $\hat{\theta}(c)$, then $X(c,t)$ contains more rows than $X(c)$. Based on our previous lemma, we know $(\ref{alg3})$ holds true.
+As we discussed before, we just need to show that $(\ref{alg3})$ holds. Since we assume $\epsilon\sim N(0,\sigma^{2})$, thus the OLS estimator $\hat{\beta}$ of $Y=X\beta+\epsilon$ follows a normal distribution $\hat{\beta}\sim N(\beta,\sigma^{2}(X'X)^{-1})$. Thus $E[\|\hat{\beta}-\beta\|^{2}]=\sigma^{2}Tr(X'X)^{-1}$. 
+
+In PEGE, suppose there are $c$ cycles, and $X_1=(\bold{b}_1,\cdots,\bold{b}_r)$, then 
+\[X_{PEGE}'X_{PEGE}=(X_1,\cdots,X_1)'(X_1,\cdots,X_1)=cX_1'X_1.\]
+In modification 3, suppose $X_2=(\bold{g}_1,\cdots,\bold{g}_n)$, where $\{\bold{g}_i\}$ is the sequence of all the recommendations in the greedy exploitation parts. Then
+\begin{align*}
+&X_{Modi3}'X_{Modi3}\\
+=&(X_1,\cdots,X_1,X_2)'(X_1,\cdots,X_1,X_2)\\
+=&cX_1'X_1+X_2'X_2
+\end{align*}
+
+Based on  lemma 6, \[tr((X_{PEGE}'X_{PEGE})^{-1})<tr((cX_1'X_1+X_2'X_2)^{-1}).\]
+Thus, we know $(\ref{alg3})$ is true.
 \end{proof}
 
 
@@ -450,16 +462,16 @@ at step $t+1$, where $\mu_{t},\Sigma_{t}$ are the paramaters of
 the posterior distribution of $\theta$ after we have seen $x_{1},y_{1},\ldots,x_{t},y_{t}$
 . Specifically,
 \begin{eqnarray*}
-\mu_{t} & = & \Sigma_{t}\left(\Sigma_{0}^{-1}\mu_{0}+\frac{1}{\sigma^{2}}X_{i}^{T}y\right)\\
- & = & \Sigma_{t}\left(\Sigma_{t-1}\mu_{t-1}+\frac{1}{\sigma^{2}}x_{t}y_{t}\right)\\
-\Sigma_{t}^{-1} & = & \Sigma_{0}^{-1}+\frac{1}{\sigma^{2}}X_{t}^{t}X_{t}=\Sigma_{t}^{-1}+\frac{1}{\sigma^{2}}x_{t}x_{t}^{t}
+\mu_{t} & = & \Sigma_{t}\left(\Sigma_{0}^{-1}\mu_{0}+\frac{1}{\sigma^{2}}X_{i}'y\right)\\
+ & = & \Sigma_{t}\left(\Sigma_{t-1}^{-1}\mu_{t-1}+\frac{1}{\sigma^{2}}x_{t}y_{t}\right)\\
+\Sigma_{t}^{-1} & = & \Sigma_{0}^{-1}+\frac{1}{\sigma^{2}}X_{t}'X_{t}=\Sigma_{t}^{-1}+\frac{1}{\sigma^{2}}x_{t}x_{t}'
 \end{eqnarray*}
 where 
 \[
 X_{t}=\left(\begin{array}{c}
-x_{1}^{t}\\
+x_{1}'\\
 \vdots\\
-x_{t}^{t}
+x_{t}'
 \end{array}\right).
 \]
 
