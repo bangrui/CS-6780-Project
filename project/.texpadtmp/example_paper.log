@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.1.26)  10 MAY 2015 13:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.1.26)  10 MAY 2015 20:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -428,10 +428,6 @@ Overfull \hbox (5.1225pt too wide) in paragraph at lines 78--78
  []
 
 
-Package amsfonts Warning: Obsolete command \bold; \mathbf should be used instea
-d on input line 98.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [1{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
@@ -439,6 +435,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ]
+
+Package amsfonts Warning: Obsolete command \bold; \mathbf should be used instea
+d on input line 98.
+
+
 Overfull \hbox (6.2094pt too wide) detected at line 116
 [][]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R[]; T; ^^Y\OT1/cmr/m/n/10 ) = [] \OML/
 cmm/m/it/10 E [] :
@@ -589,7 +590,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 580.
 Here is how much of TeX's memory you used:
  6963 strings out of 493315
  99617 string characters out of 6137904
- 204754 words of memory out of 5000000
+ 204753 words of memory out of 5000000
  10240 multiletter control sequences out of 15000+600000
  14354 words of font info for 52 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -619,7 +620,7 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2013/texm
 f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2013/
 texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
 Output written on "/Users/apple/Desktop/Cornell/2015 Spring/CS 6780/CS-6780-Pro
-ject/project/.texpadtmp/example_paper.pdf" (8 pages, 369822 bytes).
+ject/project/.texpadtmp/example_paper.pdf" (8 pages, 367758 bytes).
 PDF statistics:
  254 PDF objects out of 1000 (max. 8388607)
  211 compressed objects within 3 object streams
