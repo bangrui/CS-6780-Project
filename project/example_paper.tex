@@ -95,11 +95,11 @@ There are lots of application for this problem. For example, given a fixed budge
 
 
 \section{Problem Formulation}
-We have a finite set $\mathcal{U}_{r}=\{\bold{u}_{1},\cdots,\bold{u}_{m}\}\subset \mathbb{R}^{r}$ that corresponds to the set of arms, where $r\geq 2$. For any time $t=1,2,\cdots,T$, we are asked to pick one arm $X_{t}$. The reward $Y_{t}$ of playing arm $X_{t}\in \mathcal{U}_{r}$ in period t is given by
+We have a finite set $\mathcal{U}_{r}=\{\bold{u}_{1},\cdots,\bold{u}_{m}\}\subset \mathbb{R}^{r}$ (or infinite set $\mathcal{U}_{r}=\{\bold{u}_{1},\cdots,\bold{u}_{m},\cdots\}\subset \mathbb{R}^{r}$) that corresponds to the set of arms, where $r\geq 2$. For any time $t=1,2,\cdots,T$, we are asked to pick one arm $X_{t}$. The reward $Y_{t}$ of playing arm $X_{t}\in \mathcal{U}_{r}$ in period t is given by
 \begin{equation}
 Y_{t} = \theta \cdot X_{t} + \epsilon_{t}, \nonumber
 \end{equation}
-where $\epsilon_{t}\sim N(0,\sigma^{2})$ is the measurement error with $\sigma$ known. Here $\theta$ is an unknown random vector, which is drawn from a multivariate normal distribution with mean $\mu$ and variance $\Sigma$. We further assume $\mu$ and $\Sigma$ are known (In section 3, PEGE algorithm and our heuristic algorithms don't require $\mu$ and $\Sigma$ are known. However, UCB requires this information).
+where $\epsilon_{t}\sim N(0,\sigma^{2})$ is the measurement error with $\sigma$ remains the same overtime. Here $\theta$ is an unknown random vector. When implementing UCB algorithm, we require $\theta$ is drawn from a multivariate normal distribution with mean $\mu$ and variance $\Sigma$. We further assume $\mu$, $\sigma$ and $\Sigma$ are known when. 
 
 For a fixed time period T, the goal of this problem is to find a strategy $\pi$ to maximize the following expression
 \begin{equation}
